@@ -10,7 +10,16 @@ public class BingoItemGenerator
 {
     public BingoItemGenerator(BingoConfig config) {
         candidateItems = config.getCandidateItems();
-        selectedItems = new ArrayList<>();
+    }
+
+    public ArrayList<ItemStack> getSelectedItems()
+    {
+        if (selectedItems == null) {
+            selectedItems = new ArrayList<>();
+            generateNewList();
+        }
+
+        return selectedItems;
     }
 
     public ArrayList<ItemStack> generateNewList() {
@@ -28,16 +37,6 @@ public class BingoItemGenerator
         }
 
         return selectedItems;
-    }
-
-    static int xyTo1D(int x, int y, int xOffset, int yOffset) {
-        int actualX = x + xOffset;
-        int actualY = y + yOffset;
-        return actualY * 5 + actualX;
-    }
-
-    static int xyTo1D(int x, int y) {
-        return xyTo1D(x, y, 2, 0);
     }
 
     private static ArrayList<Material> candidateItems;

@@ -34,7 +34,7 @@ public class Commander implements CommandExecutor, TabCompleter {
             if (args[0].equals("setup")) {
                 sender.sendMessage("You have set up a new bingo map");
                 plugin.display = new ItemDisplayer(plugin);
-                for (Player p : plugin.server.getOnlinePlayers()) {
+                for (Player p : plugin.getServer().getOnlinePlayers()) {
                     for (PotionEffect effect : p.getActivePotionEffects()) {
                         p.removePotionEffect(effect.getType());
                     }
@@ -62,7 +62,7 @@ public class Commander implements CommandExecutor, TabCompleter {
                 plugin.bingoWorld = bingoWorldCreator.createWorld();
 
                 if (plugin.setupBingo) {
-                    for (Player p : plugin.server.getOnlinePlayers()) {
+                    for (Player p : plugin.getServer().getOnlinePlayers()) {
                         p.teleport(new Location(plugin.bingoWorld, 0, 100, 0));
                         p.setGameMode(GameMode.SPECTATOR);
                         p.sendMessage("The game will be started in 10 seconds...");
@@ -75,7 +75,7 @@ public class Commander implements CommandExecutor, TabCompleter {
                         e.printStackTrace();
                     }
 
-                    for (Player p : plugin.server.getOnlinePlayers()) {
+                    for (Player p : plugin.getServer().getOnlinePlayers()) {
                         p.sendMessage(ChatColor.GREEN + "Start game");
                         p.setGameMode(GameMode.SURVIVAL);
                     }
@@ -86,8 +86,8 @@ public class Commander implements CommandExecutor, TabCompleter {
                 plugin.startBingo = true;
             } else if (args[0].equals("exitworld")) {
                 if (plugin.startBingo) {
-                    for (Player p : plugin.server.getWorld("Bingo_Game").getPlayers()) {
-                        p.teleport(new Location(plugin.server.getWorld("over_world"), 0, 100, 0));
+                    for (Player p : plugin.getServer().getWorld("Bingo_Game").getPlayers()) {
+                        p.teleport(new Location(plugin.getServer().getWorld("over_world"), 0, 100, 0));
                     }
 
                 } else {

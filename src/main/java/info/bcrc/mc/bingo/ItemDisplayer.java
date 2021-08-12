@@ -22,7 +22,7 @@ public class ItemDisplayer {
 
     public ItemDisplayer(Bingo plugin) {
         this.plugin = plugin;
-        this.logger = plugin.logger;
+        this.logger = plugin.getLogger();
         this.creator = new BingoCreator(plugin);
 
         ItemStack[] newItems = creator.generateNewList();
@@ -32,8 +32,8 @@ public class ItemDisplayer {
             boolAchChart[i] = false;
         }
 
-        for (Player p : plugin.server.getOnlinePlayers()) {
-            Inventory inv = plugin.server.createInventory(null, 45, p.getName() + "'s Bingo Map");
+        for (Player p : plugin.getServer().getOnlinePlayers()) {
+            Inventory inv = plugin.getServer().createInventory(null, 45, p.getName() + "'s Bingo Map");
             inv.setContents(newItems);
             playerInventory.put(p.getName(), inv);
 

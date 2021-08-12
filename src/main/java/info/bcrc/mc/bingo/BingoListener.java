@@ -32,11 +32,11 @@ public class BingoListener implements Listener {
                     player.openInventory(plugin.display.getInvForPlayer(player));
                 }
             } else {
-                plugin.logger.info("nought");
+                plugin.getLogger().info("nought");
             }
 
         } catch (NullPointerException e) {
-            plugin.logger.info(e.toString() + "[onPlayerInteractEvent]");
+            plugin.getLogger().info(e.toString() + "[onPlayerInteractEvent]");
         }
     }
 

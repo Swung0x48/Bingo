@@ -60,8 +60,8 @@ public class BingoCreator {
         return chestList;
     }
 
-    public void readAllowedItems() {
-        FileConfiguration data = YamlConfiguration.loadConfiguration(plugin.getResource("data.yml"));
-    }
+//    public void readAllowedItems() {
+//        FileConfiguration data = YamlConfiguration.loadConfiguration(plugin.getResource("data.yml"));
+//    }
 
 }

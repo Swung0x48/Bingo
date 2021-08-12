@@ -2,8 +2,6 @@ package info.bcrc.mc.bingo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

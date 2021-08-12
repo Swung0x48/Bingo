@@ -29,14 +29,14 @@ public class BingoListener implements Listener {
             if (item != null) {
                 if (plugin.setupBingo && item.getType().equals(Material.NETHER_STAR)) {
                     event.setCancelled(true);
-                    player.openInventory(plugin.display.getInvForPlayer(player));
+                    player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
                 }
             } else {
                 plugin.getLogger().info("nought");
             }
 
         } catch (NullPointerException e) {
-            plugin.getLogger().info(e.toString() + "[onPlayerInteractEvent]");
+            plugin.getLogger().info(e + "[onPlayerInteractEvent]");
         }
     }
 
@@ -44,7 +44,7 @@ public class BingoListener implements Listener {
     public void onInventoryClickEvent(InventoryClickEvent event) {
         if (event.getCurrentItem() != null) {
             if (event.getCurrentItem().getType().equals(Material.NETHER_STAR)
-                    || plugin.display.testInv(event.getClickedInventory())) {
+                    || plugin.getItemDisplayer().testInv(event.getClickedInventory())) {
                 event.setCancelled(true);
                 return;
             }
@@ -61,14 +61,14 @@ public class BingoListener implements Listener {
     // 用不了似乎
     @EventHandler
     public void onInventoryMoveItemEvent(InventoryMoveItemEvent event) {
-        if (plugin.display.testInv(event.getDestination())) {
+        if (plugin.getItemDisplayer().testInv(event.getDestination())) {
             event.setCancelled(true);
 
             Player player = (Player) event.getSource().getHolder();
             ItemStack item = event.getItem();
 
-            if (plugin.display.testItem(player, item)) {
-                plugin.display.playerAchieve(player, item);
+            if (plugin.getItemDisplayer().testItem(player, item)) {
+                plugin.getItemDisplayer().playerAchieve(player, item);
                 if (item.getAmount() == 1) {
                     event.getItem().setType(Material.AIR);
                 } else {
@@ -94,9 +94,9 @@ public class BingoListener implements Listener {
             return;
         }
 
-        if (plugin.display.testItem(event.getPlayer(), item)) {
+        if (plugin.getItemDisplayer().testItem(event.getPlayer(), item)) {
             // event.setCancelled(true);
-            plugin.display.playerAchieve(event.getPlayer(), item);
+            plugin.getItemDisplayer().playerAchieve(event.getPlayer(), item);
             // if (item.getAmount() == 1) {
             event.getItemDrop().remove();
             // } else {

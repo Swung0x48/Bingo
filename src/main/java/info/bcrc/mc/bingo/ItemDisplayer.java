@@ -15,7 +15,7 @@ public class ItemDisplayer {
 
     protected Logger logger;
     protected Bingo plugin;
-    protected BingoCreator creator;
+    protected BingoItemGenerator creator;
 
     private HashMap<String, Inventory> playerInventory = new HashMap<>();
     private HashMap<String, boolean[]> finished = new HashMap<>();
@@ -23,9 +23,9 @@ public class ItemDisplayer {
     public ItemDisplayer(Bingo plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        this.creator = new BingoCreator(plugin);
+        this.creator = new BingoItemGenerator(plugin.getBingoConfig());
 
-        ItemStack[] newItems = creator.generateNewList();
+        ItemStack[] newItems = creator.generateNewList().toArray(new ItemStack[45]);
 
         boolean[] boolAchChart = new boolean[45];
         for (int i = 0; i < 45; i++) {
@@ -41,7 +41,7 @@ public class ItemDisplayer {
         }
     }
 
-    public Inventory getInvForPlayer(Player player) {
+    public Inventory getInventoryByPlayer(Player player) {
         return playerInventory.get(player.getName());
     }
 
@@ -58,7 +58,7 @@ public class ItemDisplayer {
     }
 
     public void playerAchieve(Player player, ItemStack item) {
-        Inventory inv = getInvForPlayer(player);
+        Inventory inv = getInventoryByPlayer(player);
         boolean[] hasFinished = finished.get(player.getName());
         int index = inv.first(item);
 

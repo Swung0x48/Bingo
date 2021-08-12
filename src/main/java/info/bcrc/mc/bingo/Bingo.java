@@ -1,15 +1,16 @@
 package info.bcrc.mc.bingo;
 
 import java.util.*;
+import java.util.logging.Level;
 
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Bingo extends JavaPlugin {
-    private ItemDisplayer itemDisplayer;
     public boolean setupBingo = false;
     public boolean startBingo = false;
     public World bingoWorld;
+    private ItemDisplayer itemDisplayer;
 
     private BingoConfig bingoConfig;
     public BingoCommandExecutor bingoCommandExecutor;
@@ -21,9 +22,7 @@ public class Bingo extends JavaPlugin {
     }
 
     public Bingo() {
-        itemDisplayer = new ItemDisplayer(this);
-        bingoCommandExecutor = new BingoCommandExecutor(this);
-        bingoListener = new BingoListener(this);
+        bingoConfig = new BingoConfig(this.getConfig());
     }
 
     public ItemDisplayer getItemDisplayer() {
@@ -33,9 +32,9 @@ public class Bingo extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
-        bingoConfig = new BingoConfig(this.getConfig());
-
+        itemDisplayer = new ItemDisplayer(this);
+        bingoCommandExecutor = new BingoCommandExecutor(this);
+        bingoListener = new BingoListener(this);
         this.getServer().getPluginManager().registerEvents(bingoListener, this);
 
         saveConfig();

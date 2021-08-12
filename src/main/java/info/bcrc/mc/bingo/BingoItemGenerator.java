@@ -24,6 +24,9 @@ public class BingoItemGenerator
 
     public ArrayList<ItemStack> generateNewList() {
         Collections.shuffle(candidateItems);
+        if (selectedItems == null)
+            selectedItems = new ArrayList<>();
+
         for (int i = 0; i < 25;) {
             for (int j = 0; j < 2; ++j)
                 selectedItems.add(new ItemStack(Material.AIR));

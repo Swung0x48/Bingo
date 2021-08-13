@@ -1,8 +1,11 @@
 package info.bcrc.mc.bingo;
 
 import java.util.*;
-import java.util.logging.Level;
 
+import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
+import info.bcrc.mc.bingo.controller.BingoListener;
+import info.bcrc.mc.bingo.service.BingoGame;
+import info.bcrc.mc.bingo.util.BingoConfig;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,6 +15,12 @@ public class Bingo extends JavaPlugin {
     public World bingoWorld;
     private ItemDisplayer itemDisplayer;
 
+    public BingoGame getBingoGame()
+    {
+        return bingoGame;
+    }
+
+    private BingoGame bingoGame;
     private BingoConfig bingoConfig;
     private BingoCommandExecutor bingoCommandExecutor;
     private BingoListener bingoListener;

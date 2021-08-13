@@ -13,8 +13,8 @@ public class Bingo extends JavaPlugin {
     private ItemDisplayer itemDisplayer;
 
     private BingoConfig bingoConfig;
-    public BingoCommandExecutor bingoCommandExecutor;
-    public BingoListener bingoListener;
+    private BingoCommandExecutor bingoCommandExecutor;
+    private BingoListener bingoListener;
 
     public BingoConfig getBingoConfig()
     {
@@ -22,7 +22,6 @@ public class Bingo extends JavaPlugin {
     }
 
     public Bingo() {
-        bingoConfig = new BingoConfig(this.getConfig());
     }
 
     public ItemDisplayer getItemDisplayer() {
@@ -32,12 +31,15 @@ public class Bingo extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        bingoConfig = new BingoConfig(this.getConfig());
+        
+        saveConfig();
+
         itemDisplayer = new ItemDisplayer(this);
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
         this.getServer().getPluginManager().registerEvents(bingoListener, this);
 
-        saveConfig();
         Objects.requireNonNull(getCommand("bingo")).setExecutor(bingoCommandExecutor);
     }
 

@@ -31,8 +31,6 @@ public class BingoListener implements Listener {
                     event.setCancelled(true);
                     player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
                 }
-            } else {
-                plugin.getLogger().info("nought");
             }
 
         } catch (NullPointerException e) {

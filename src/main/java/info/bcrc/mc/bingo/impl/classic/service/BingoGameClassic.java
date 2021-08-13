@@ -18,6 +18,13 @@ public class BingoGameClassic extends BingoGame
     }
 
     @Override
+    public void setup()
+    {
+        super.setup();
+        plugin.bingoGame = new BingoGameClassic(plugin);
+    }
+
+    @Override
     public BingoCardClassic createBingoCardForPlayer(Player player)
     {
         return new BingoCardClassic(plugin.getBingoItemGenerator()

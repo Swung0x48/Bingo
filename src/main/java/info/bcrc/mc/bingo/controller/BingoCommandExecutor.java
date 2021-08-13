@@ -16,11 +16,9 @@ import org.bukkit.entity.Player;
 public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 
     Bingo plugin;
-    BingoGame game;
 
     public BingoCommandExecutor(Bingo plugin) {
         this.plugin = plugin;
-        this.game = plugin.getBingoGame();
     }
 
     @Override
@@ -29,8 +27,9 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
             switch (args[0])
             {
                 case "setup":
-                    game = new BingoGameClassic(plugin);
-                    game.setup();
+                    plugin.bingoGame = new BingoGameClassic(plugin);
+                    plugin.bingoGame.setup();
+                    plugin.getLogger().info("afterSetup: " + plugin.bingoGame.getGameState().name());
 //                    sender.sendMessage("You have set up a new bingo map");
 //                    //plugin.displayer = new ItemDisplayer(plugin);
 //                    for (Player p : plugin.getServer().getOnlinePlayers())
@@ -64,13 +63,15 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     if (p == null)
                         sender.sendMessage("This command can only be issued by player.");
 
-                    game.join(p);
+                    plugin.bingoGame.join(p);
                     break;
                 case "start":
-                    if (game.getGameState() != BingoGame.GameState.SETUP)
+                    if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
                         sender.sendMessage("Error: The bingo has not been set up");
 
-                    game.start();
+                    plugin.bingoGame.start();
+                    plugin.getLogger().info("afterStart: " + plugin.bingoGame.getGameState().name());
+
 //                    WorldCreator bingoWorldCreator = new WorldCreator("Bingo_Game");
 //                    bingoWorldCreator.environment(World.Environment.NORMAL);
 //                    bingoWorldCreator.type(WorldType.NORMAL);
@@ -107,7 +108,6 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 //                    plugin.startBingo = true;
                     break;
                 case "exitworld":
-                    throw new NotImplementedException();
 //                    if ()
 //                    {
 //                        for (Player p : plugin.getServer().getWorld("Bingo_Game").getPlayers())
@@ -119,6 +119,10 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 //                    {
 //                        sender.sendMessage("Error: The bingo has not been start up");
 //                    }
+                    break;
+                case "status":
+                    plugin.getLogger().info(plugin.bingoGame.getGameState().name());
+                    break;
             }
         }
         return false;

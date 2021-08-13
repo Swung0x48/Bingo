@@ -1,6 +1,7 @@
 package info.bcrc.mc.bingo.controller;
 
 import info.bcrc.mc.bingo.Bingo;
+import info.bcrc.mc.bingo.base.service.BingoGame;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,20 +24,19 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
-        try {
-            ItemStack item = event.getItem();
-            Player player = event.getPlayer();
+        ItemStack item = event.getItem();
+        Player player = event.getPlayer();
 
-            if (item != null) {
-                if (plugin.setupBingo && item.getType().equals(Material.NETHER_STAR)) {
-                    event.setCancelled(true);
-                    plugin.getBingoGame().openBingoCard(player);
-//                    player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
-                }
-            }
-
-        } catch (NullPointerException e) {
-            plugin.getLogger().info(e + "[onPlayerInteractEvent]");
+        plugin.getLogger().info("onPlayerInteractEvent");
+        if (plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING && item.getType().equals(Material.NETHER_STAR)) {
+            event.setCancelled(true);
+            plugin.getLogger().info("openBingoCard");
+            plugin.getBingoGame().openBingoCard(player);
+            //
+            //player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
+        } else {
+            plugin.getLogger().info(plugin.getBingoGame().getGameState().name());
+            plugin.getLogger().info(item.getType().name());
         }
     }
 

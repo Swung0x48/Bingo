@@ -16,6 +16,7 @@ public class BingoCardView
     public BingoCardView(Bingo plugin, Player player, ItemStack[] items) {
         inventory = plugin.getServer().createInventory(null, 45, player.getName() + "'s Bingo Card");
         inventory.setContents(items);
+        this.player = player;
     }
 
     public void toggle(int index) {
@@ -42,5 +43,6 @@ public class BingoCardView
 
     public void openView() {
         player.openInventory(inventory);
+        System.out.println("openView " + player.getName());
     }
 }

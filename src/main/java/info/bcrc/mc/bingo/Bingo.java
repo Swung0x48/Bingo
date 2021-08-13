@@ -12,8 +12,6 @@ import info.bcrc.mc.bingo.controller.BingoListener;
 import info.bcrc.mc.bingo.util.BingoConfig;
 
 public class Bingo extends JavaPlugin {
-    public boolean setupBingo = false;
-    public boolean startBingo = false;
     public World bingoWorld;
     private ItemDisplayer itemDisplayer;
 
@@ -21,7 +19,7 @@ public class Bingo extends JavaPlugin {
         return bingoGame;
     }
 
-    private BingoGame bingoGame;
+    public BingoGame bingoGame;
     private BingoConfig bingoConfig;
     private BingoCommandExecutor bingoCommandExecutor;
     private BingoListener bingoListener;

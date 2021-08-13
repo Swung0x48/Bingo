@@ -41,6 +41,8 @@ public abstract class BingoGame {
     }
 
     public void setup() {
+        plugin.getLogger().info("Setting up Bingo game...");
+
         if (gameState != GameState.FINISHED && gameState != GameState.UNINITIALIZED)
         {
             plugin.getLogger().info("Game is already running.");
@@ -56,13 +58,16 @@ public abstract class BingoGame {
     }
 
     public void start() {
-        this.gameState = GameState.RUNNING;
+        plugin.getLogger().info("Starting Bingo game...");
+
         playerState.forEach((player, _unused) -> {
             playerState.put(player, createBingoCardForPlayer(player));
             initializePlayer(player);
         });
         playerView.forEach((player, _unused) ->
                 playerView.put(player, createBingoCardViewForPlayer(player, playerState.get(player).items)));
+
+        this.gameState = GameState.RUNNING;
     }
 
     private void initializePlayer(Player player)

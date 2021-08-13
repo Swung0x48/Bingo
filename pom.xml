@@ -40,7 +40,7 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <configuration>
                     <tasks>
-                        <copy file="target/Bingo-0.0.1.jar" todir="D:\server\201124\plugins\" />
+                        <copy file="target/Bingo-0.0.1.jar" todir="/Users/swung0x48/Downloads/paper/plugins/" />
                     </tasks>
                 </configuration>
                 <executions>

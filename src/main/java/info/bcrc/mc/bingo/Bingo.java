@@ -2,6 +2,7 @@ package info.bcrc.mc.bingo;
 
 import java.util.Objects;
 
+import info.bcrc.mc.bingo.util.BingoItemGenerator;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +26,13 @@ public class Bingo extends JavaPlugin {
     private BingoCommandExecutor bingoCommandExecutor;
     private BingoListener bingoListener;
 
+    public BingoItemGenerator getBingoItemGenerator()
+    {
+        return bingoItemGenerator;
+    }
+
+    private BingoItemGenerator bingoItemGenerator;
+
     public BingoConfig getBingoConfig() {
         return bingoConfig;
     }
@@ -46,6 +54,7 @@ public class Bingo extends JavaPlugin {
         itemDisplayer = new ItemDisplayer(this);
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
+        bingoItemGenerator = new BingoItemGenerator(getBingoConfig());
         this.getServer().getPluginManager().registerEvents(bingoListener, this);
 
         Objects.requireNonNull(getCommand("bingo")).setExecutor(bingoCommandExecutor);

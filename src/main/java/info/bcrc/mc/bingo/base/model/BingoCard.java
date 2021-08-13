@@ -12,8 +12,8 @@ import java.util.Arrays;
 **/
 public abstract class BingoCard
 {
-    ItemStack[] items;
-    boolean[] checked;
+    public ItemStack[] items;
+    public boolean[] checked;
 
     public BingoCard(ItemStack[] items) {
         this.items = items;
@@ -23,6 +23,10 @@ public abstract class BingoCard
 
     public void toggle(int index) {
         checked[index] = !checked[index];
+    }
+
+    public void toggle(ItemStack item) {
+        toggle(Arrays.asList(items).indexOf(item));
     }
 
     public abstract boolean hasFinished();

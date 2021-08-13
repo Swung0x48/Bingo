@@ -12,11 +12,8 @@ public class BingoCardView
 {
     protected Inventory inventory;
 
-    public BingoCardView(Bingo plugin, Player player) {
+    public BingoCardView(Bingo plugin, Player player, ItemStack[] items) {
         inventory = plugin.getServer().createInventory(null, 45, player.getName() + "'s Bingo Card");
-    }
-
-    public void setup(ItemStack[] items) {
         inventory.setContents(items);
     }
 
@@ -34,7 +31,15 @@ public class BingoCardView
         update(index, item);
     }
 
+    public void toggle(ItemStack item) {
+        toggle(inventory.first(item));
+    }
+
     public void update(int index, ItemStack item) {
         inventory.setItem(index, item);
+    }
+
+    public void openView() {
+
     }
 }

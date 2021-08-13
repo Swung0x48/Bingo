@@ -31,6 +31,10 @@ public class BingoCardView
         }
         meta.setDisplayName(ChatColor.GREEN + "Achieved");
         item.setItemMeta(meta);
+        update(index, item);
+    }
+
+    public void update(int index, ItemStack item) {
         inventory.setItem(index, item);
     }
 }

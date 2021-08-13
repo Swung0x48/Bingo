@@ -5,17 +5,21 @@ import java.util.List;
 
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
+import info.bcrc.mc.bingo.impl.classic.service.BingoGameClassic;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 
+    Bingo plugin;
     BingoGame game;
 
     public BingoCommandExecutor(Bingo plugin) {
+        this.plugin = plugin;
         this.game = plugin.getBingoGame();
     }
 
@@ -25,6 +29,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
             switch (args[0])
             {
                 case "setup":
+                    game = new BingoGameClassic(plugin);
                     game.setup();
 //                    sender.sendMessage("You have set up a new bingo map");
 //                    //plugin.displayer = new ItemDisplayer(plugin);
@@ -51,6 +56,15 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 //                        p.sendMessage("Click with the nether_star to check the bingo map");
 //                    }
 //                    plugin.setupBingo = true;
+                    break;
+                case "join":
+                    Player p = null;
+                    if (sender instanceof Player)
+                        p = (Player) sender;
+                    if (p == null)
+                        sender.sendMessage("This command can only be issued by player.");
+
+                    game.join(p);
                     break;
                 case "start":
                     if (game.getGameState() != BingoGame.GameState.SETUP)

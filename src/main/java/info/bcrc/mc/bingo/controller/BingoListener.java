@@ -30,7 +30,8 @@ public class BingoListener implements Listener {
             if (item != null) {
                 if (plugin.setupBingo && item.getType().equals(Material.NETHER_STAR)) {
                     event.setCancelled(true);
-                    player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
+                    plugin.getBingoGame().openBingoCard(player);
+//                    player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
                 }
             }
 
@@ -104,5 +105,4 @@ public class BingoListener implements Listener {
             return;
         }
     }
-
 }

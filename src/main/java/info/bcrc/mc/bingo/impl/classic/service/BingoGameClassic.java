@@ -12,7 +12,8 @@ public class BingoGameClassic extends BingoGame
 {
     Bingo plugin;
 
-    BingoGameClassic(Bingo plugin) {
+    public BingoGameClassic(Bingo plugin) {
+        super(plugin);
         this.plugin = plugin;
     }
 

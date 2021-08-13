@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import info.bcrc.mc.bingo.util.BingoItemGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,7 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import info.bcrc.mc.bingo.util.BingoItemGenerator;
 
-public class ItemDisplayer {
+public class ItemDisplayer
+{
 
     protected Logger logger;
     protected Bingo plugin;
@@ -35,7 +37,7 @@ public class ItemDisplayer {
         }
 
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            Inventory inv = plugin.getServer().createInventory(null, 45, p.getName() + "'s Bingo Map");
+            Inventory inv = plugin.getServer().createInventory(null, 45, p.getName() + "'s Bingo Card");
             inv.setContents(newItems);
             playerInventory.put(p.getName(), inv);
 

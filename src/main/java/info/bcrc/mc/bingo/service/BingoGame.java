@@ -8,9 +8,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 
 public abstract class BingoGame {
-    enum GameState {
+    public enum GameState {
         UNINITIALIZED,
-        PENDING,
+        SETUP,
         RUNNING,
         FINISHED
     }
@@ -21,8 +21,13 @@ public abstract class BingoGame {
         this.gameState = GameState.UNINITIALIZED;
     }
 
+    public GameState getGameState()
+    {
+        return gameState;
+    }
+
     public void setup() {
-        this.gameState = GameState.PENDING;
+        this.gameState = GameState.SETUP;
     }
 
     public void join(Player player) {
@@ -34,6 +39,10 @@ public abstract class BingoGame {
     }
 
     public ArrayList<Player> getPlayersInGame() {
+        throw new NotImplementedException();
+    }
+
+    public boolean playerInGame(Player player) {
         throw new NotImplementedException();
     }
 

@@ -3,7 +3,6 @@ package info.bcrc.mc.bingo.util;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import info.bcrc.mc.bingo.util.BingoConfig;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

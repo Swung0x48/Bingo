@@ -1,4 +1,4 @@
-package info.bcrc.mc.bingo;
+package info.bcrc.mc.bingo.util;
 
 import org.bukkit.Material;
 

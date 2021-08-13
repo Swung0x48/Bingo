@@ -1,5 +1,6 @@
-package info.bcrc.mc.bingo;
+package info.bcrc.mc.bingo.controller;
 
+import info.bcrc.mc.bingo.Bingo;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

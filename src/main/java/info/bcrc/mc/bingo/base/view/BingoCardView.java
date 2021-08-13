@@ -1,4 +1,4 @@
-package info.bcrc.mc.bingo.view;
+package info.bcrc.mc.bingo.base.view;
 
 import info.bcrc.mc.bingo.Bingo;
 import org.bukkit.ChatColor;
@@ -10,9 +10,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BingoCardView
 {
-    Inventory inventory;
+    protected Inventory inventory;
 
-    BingoCardView(Bingo plugin, Player player) {
+    public BingoCardView(Bingo plugin, Player player) {
         inventory = plugin.getServer().createInventory(null, 45, player.getName() + "'s Bingo Card");
     }
 

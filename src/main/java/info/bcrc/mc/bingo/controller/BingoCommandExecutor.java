@@ -4,24 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import info.bcrc.mc.bingo.Bingo;
-import info.bcrc.mc.bingo.service.BingoGame;
+import info.bcrc.mc.bingo.base.service.BingoGame;
 import org.apache.commons.lang.NotImplementedException;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 

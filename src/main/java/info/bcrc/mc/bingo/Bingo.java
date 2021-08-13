@@ -4,7 +4,7 @@ import java.util.*;
 
 import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
 import info.bcrc.mc.bingo.controller.BingoListener;
-import info.bcrc.mc.bingo.service.BingoGame;
+import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.util.BingoConfig;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;

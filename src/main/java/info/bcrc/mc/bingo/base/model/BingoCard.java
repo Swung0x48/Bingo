@@ -1,4 +1,4 @@
-package info.bcrc.mc.bingo.model;
+package info.bcrc.mc.bingo.base.model;
 
 import org.bukkit.inventory.ItemStack;
 

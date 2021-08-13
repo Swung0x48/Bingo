@@ -1,6 +1,5 @@
-package info.bcrc.mc.bingo.service;
+package info.bcrc.mc.bingo.base.service;
 
-import info.bcrc.mc.bingo.util.BingoItemGenerator;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,13 +20,16 @@ public abstract class BingoGame {
         this.gameState = GameState.UNINITIALIZED;
     }
 
-    public GameState getGameState()
-    {
+    public GameState getGameState() {
         return gameState;
     }
 
     public void setup() {
+        if (gameState != GameState.FINISHED && gameState != GameState.UNINITIALIZED)
+            return;
+
         this.gameState = GameState.SETUP;
+
     }
 
     public void join(Player player) {

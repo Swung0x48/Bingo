@@ -1,8 +1,9 @@
-package info.bcrc.mc.bingo;
+package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+import info.bcrc.mc.bingo.util.BingoConfig;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,8 +13,7 @@ public class BingoItemGenerator
         candidateItems = config.getCandidateItems();
     }
 
-    public ArrayList<ItemStack> getSelectedItems()
-    {
+    public ArrayList<ItemStack> getSelectedItems() {
         if (selectedItems == null) {
             selectedItems = new ArrayList<>();
             generateNewList();

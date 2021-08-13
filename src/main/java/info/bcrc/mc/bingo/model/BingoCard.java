@@ -25,5 +25,5 @@ public abstract class BingoCard
         checked[index] = !checked[index];
     }
 
-    public abstract boolean finished();
+    public abstract boolean hasFinished();
 }

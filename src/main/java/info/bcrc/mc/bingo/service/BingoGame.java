@@ -42,7 +42,7 @@ public abstract class BingoGame {
         throw new NotImplementedException();
     }
 
-    public boolean playerInGame(Player player) {
+    public boolean isPlayerInGame(Player player) {
         throw new NotImplementedException();
     }
 

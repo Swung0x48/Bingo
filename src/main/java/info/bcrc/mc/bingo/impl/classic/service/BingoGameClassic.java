@@ -21,7 +21,6 @@ public class BingoGameClassic extends BingoGame
     public void setup()
     {
         super.setup();
-        plugin.bingoGame = new BingoGameClassic(plugin);
     }
 
     @Override

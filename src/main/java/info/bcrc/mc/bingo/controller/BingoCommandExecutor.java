@@ -132,7 +132,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equals("bingo")) {
             if (args.length <= 1) {
-                return Arrays.asList("setup", "start", "exitworld");
+                return Arrays.asList("setup", "join", "start", "exitworld");
             }
         }
         return null;

@@ -10,13 +10,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BingoCardView
 {
-    protected Inventory inventory;
-    protected Player player;
-
     public BingoCardView(Bingo plugin, Player player, ItemStack[] items) {
         inventory = plugin.getServer().createInventory(null, 45, player.getName() + "'s Bingo Card");
         inventory.setContents(items);
         this.player = player;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void toggle(int index) {
@@ -43,6 +44,8 @@ public class BingoCardView
 
     public void openView() {
         player.openInventory(inventory);
-        System.out.println("openView " + player.getName());
     }
+
+    protected Inventory inventory;
+    protected Player player;
 }

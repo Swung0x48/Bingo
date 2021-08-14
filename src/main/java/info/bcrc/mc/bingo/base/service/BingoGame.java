@@ -7,14 +7,14 @@ import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
 
 public abstract class BingoGame {
     public enum GameState {
@@ -71,16 +71,36 @@ public abstract class BingoGame {
         this.gameState = GameState.RUNNING;
     }
 
+    public void stop() {
+        throw new NotImplementedException();
+    }
+
+    public void finish() {
+        this.gameState = GameState.FINISHED;
+    }
+
     public abstract BingoCard createBingoCardForPlayer(Player player);
 
     public abstract BingoCardView createBingoCardViewForPlayer(Player player, ItemStack[] items);
 
-    public ArrayList<Player> getPlayersInGame() {
-        throw new NotImplementedException();
+    public BingoCard getBingoCardByPlayer(Player player) {
+        return playerState.get(player);
+    }
+
+    public BingoCardView getBingoCardViewByPlayer(Player player) {
+        return playerView.get(player);
+    }
+
+    public boolean cardViewBelongsToPlayer(Inventory inventory, Player player) {
+        return inventory == getBingoCardViewByPlayer(player).getInventory();
+    }
+
+    public Set<Player> getPlayersInGame() {
+        return playerState.keySet();
     }
 
     public boolean isPlayerInGame(Player player) {
-        throw new NotImplementedException();
+        return playerState.containsKey(player);
     }
 
     public abstract void found(Player player, ItemStack item);
@@ -89,14 +109,6 @@ public abstract class BingoGame {
         BingoCardView view = playerView.get(player);
         if (view != null)
             view.openView();
-    }
-
-    public void stop() {
-        throw new NotImplementedException();
-    }
-
-    public void finish() {
-        this.gameState = GameState.FINISHED;
     }
 
     private void initializePlayer(Player player)

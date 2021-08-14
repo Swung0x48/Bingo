@@ -28,23 +28,20 @@ public class BingoListener implements Listener {
         Player player = event.getPlayer();
 
         plugin.getLogger().info("onPlayerInteractEvent");
-        if (plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING && item.getType().equals(Material.NETHER_STAR)) {
+        if (item != null && plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING && item.getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
             plugin.getLogger().info("openBingoCard");
             plugin.getBingoGame().openBingoCard(player);
-            //
-            //player.openInventory(plugin.getItemDisplayer().getInventoryByPlayer(player));
-        } else {
-            plugin.getLogger().info(plugin.getBingoGame().getGameState().name());
-            plugin.getLogger().info(item.getType().name());
         }
     }
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
         if (event.getCurrentItem() != null) {
-            if (event.getCurrentItem().getType().equals(Material.NETHER_STAR)
-                    || plugin.getItemDisplayer().testInv(event.getClickedInventory())) {
+            if (plugin.getBingoGame().isPlayerInGame(player) &&
+                    event.getCurrentItem().getType().equals(Material.NETHER_STAR)
+                    || plugin.getBingoGame().cardViewBelongsToPlayer(event.getClickedInventory(), player)) {
                 event.setCancelled(true);
                 return;
             }

@@ -1,6 +1,6 @@
 name: Bingo
 version: "0.0.1"
-author: Ghomist & Xenapte
+author: Swung0x48 & Ghomist & Xenapte
 main: info.bcrc.mc.bingo.Bingo
 api-version: 1.17
 commands:

@@ -55,7 +55,6 @@ public class BingoListener implements Listener {
                     && event.getCurrentItem().getType().equals(Material.NETHER_STAR)
                     || plugin.getBingoGame().cardViewBelongsToPlayer(event.getClickedInventory(), player)) {
                 event.setCancelled(true);
-                return;
             }
         }
     }

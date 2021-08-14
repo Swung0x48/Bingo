@@ -2,14 +2,18 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
-public class BingoItemGenerator
-{
-    public BingoItemGenerator(BingoConfig config) {
+public class BingoRandomGenerator {
+    public BingoRandomGenerator(BingoConfig config) {
         candidateItems = config.getCandidateItems();
+        minCoordinate = config.getMinCoordinate();
+        maxCoordinate = config.getMaxCoordinate();
     }
 
     public ArrayList<ItemStack> getSelectedItems() {
@@ -40,6 +44,23 @@ public class BingoItemGenerator
         return selectedItems;
     }
 
+    public Location generateRandomLocation(World world) {
+        double x = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
+        double z = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
+
+        return new Location(world, x, 192, z);
+    }
+
+    public Location getLocation(World world) {
+        if (location == null)
+            return generateRandomLocation(world);
+
+        return location;
+    }
+
     private static ArrayList<Material> candidateItems;
     private ArrayList<ItemStack> selectedItems;
+    private Location location;
+    private double minCoordinate;
+    private double maxCoordinate;
 }

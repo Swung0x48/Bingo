@@ -1,8 +1,8 @@
 package info.bcrc.mc.bingo.base.service;
 
-import info.bcrc.mc.bingo.Bingo;
-import info.bcrc.mc.bingo.base.model.BingoCard;
-import info.bcrc.mc.bingo.base.view.BingoCardView;
+import java.util.HashMap;
+import java.util.Set;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,15 +13,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.HashMap;
-import java.util.Set;
+import info.bcrc.mc.bingo.Bingo;
+import info.bcrc.mc.bingo.base.model.BingoCard;
+import info.bcrc.mc.bingo.base.view.BingoCardView;
 
 public abstract class BingoGame {
     public enum GameState {
-        UNINITIALIZED,
-        SETUP,
-        RUNNING,
-        FINISHED
+        UNINITIALIZED, SETUP, RUNNING, FINISHED
     }
 
     protected Bingo plugin;
@@ -43,13 +41,12 @@ public abstract class BingoGame {
     public void setup() {
         plugin.getLogger().info("Setting up Bingo game...");
 
-        if (gameState != GameState.FINISHED && gameState != GameState.UNINITIALIZED)
-        {
+        if (gameState != GameState.FINISHED && gameState != GameState.UNINITIALIZED) {
             plugin.getLogger().info("Game is already running.");
             return;
         }
 
-        plugin.getBingoItemGenerator().generateNewList();
+        plugin.getBingoRandomGenerator().generateNewList();
         this.gameState = GameState.SETUP;
     }
 
@@ -64,9 +61,10 @@ public abstract class BingoGame {
         playerState.forEach((player, _unused) -> {
             playerState.put(player, createBingoCardForPlayer(player));
             initializePlayer(player);
+            player.teleport(plugin.getBingoRandomGenerator().getLocation(player.getWorld()));
         });
-        playerView.forEach((player, _unused) ->
-                playerView.put(player, createBingoCardViewForPlayer(player, playerState.get(player).items)));
+        playerView.forEach((player, _unused) -> playerView.put(player,
+                createBingoCardViewForPlayer(player, playerState.get(player).items)));
 
         this.gameState = GameState.RUNNING;
     }
@@ -111,10 +109,8 @@ public abstract class BingoGame {
             view.openView();
     }
 
-    private void initializePlayer(Player player)
-    {
-        for (PotionEffect effect : player.getActivePotionEffects())
-        {
+    private void initializePlayer(Player player) {
+        for (PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
         player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 999999, 255, false, false));

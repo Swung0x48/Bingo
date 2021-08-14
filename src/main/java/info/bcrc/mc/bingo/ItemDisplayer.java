@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import info.bcrc.mc.bingo.util.BingoItemGenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,14 +11,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import info.bcrc.mc.bingo.util.BingoItemGenerator;
+import info.bcrc.mc.bingo.util.BingoRandomGenerator;
 
-public class ItemDisplayer
-{
+public class ItemDisplayer {
 
     protected Logger logger;
     protected Bingo plugin;
-    protected BingoItemGenerator creator;
+    protected BingoRandomGenerator creator;
 
     private HashMap<String, Inventory> playerInventory = new HashMap<>();
     private HashMap<String, boolean[]> finished = new HashMap<>();
@@ -27,7 +25,7 @@ public class ItemDisplayer
     public ItemDisplayer(Bingo plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-        this.creator = new BingoItemGenerator(plugin.getBingoConfig());
+        this.creator = new BingoRandomGenerator(plugin.getBingoConfig());
 
         ItemStack[] newItems = creator.generateNewList().toArray(new ItemStack[45]);
 

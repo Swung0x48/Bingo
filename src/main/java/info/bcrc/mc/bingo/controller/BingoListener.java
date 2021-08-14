@@ -2,6 +2,8 @@ package info.bcrc.mc.bingo.controller;
 
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
+import info.bcrc.mc.bingo.util.MessageSender;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,9 +22,11 @@ import java.util.Objects;
 public class BingoListener implements Listener {
 
     protected Bingo plugin;
+    protected MessageSender messageSender;
 
     public BingoListener(Bingo plugin) {
         this.plugin = plugin;
+        messageSender = new MessageSender(plugin);
     }
 
     @EventHandler
@@ -113,7 +117,10 @@ public class BingoListener implements Listener {
 
     private void onPlayerFound(Player player, ItemStack item) {
         plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
-            inGamePlayer.sendMessage(player.getName() + " found " + item.getType().name() + "!");
+            messageSender.sendRawMessage(inGamePlayer, 
+                    "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
+                    + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
+                    + messageSender.getItemTranslationKey(item.getType()) + "\"}, {\"text\": \"] !\"}]}");
         });
     }
 }

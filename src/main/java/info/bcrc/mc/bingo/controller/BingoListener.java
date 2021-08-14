@@ -31,7 +31,9 @@ public class BingoListener implements Listener {
         Player player = event.getPlayer();
 
         plugin.getLogger().info("onPlayerInteractEvent");
-        if (item != null && plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING && item.getType().equals(Material.NETHER_STAR)) {
+        if (item != null
+                && plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING
+                && item.getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
             plugin.getLogger().info("openBingoCard");
             plugin.getBingoGame().openBingoCard(player);
@@ -42,8 +44,8 @@ public class BingoListener implements Listener {
     public void onInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (event.getCurrentItem() != null) {
-            if (plugin.getBingoGame().isPlayerInGame(player) &&
-                    event.getCurrentItem().getType().equals(Material.NETHER_STAR)
+            if (plugin.getBingoGame().isPlayerInGame(player)
+                    && event.getCurrentItem().getType().equals(Material.NETHER_STAR)
                     || plugin.getBingoGame().cardViewBelongsToPlayer(event.getClickedInventory(), player)) {
                 event.setCancelled(true);
                 return;

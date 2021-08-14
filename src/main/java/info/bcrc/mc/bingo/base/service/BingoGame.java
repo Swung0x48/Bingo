@@ -48,23 +48,31 @@ public abstract class BingoGame {
 
         plugin.getBingoRandomGenerator().generateNewList();
         this.gameState = GameState.SETUP;
+
+        plugin.getServer().getOnlinePlayers().forEach(player -> {
+            player.sendMessage("A bingo game has been set up.");
+            player.sendMessage("Type /bingo join to join it.");
+        });
     }
 
     public void join(Player player) {
         playerState.put(player, null);
         playerView.put(player, null);
+        player.sendMessage("You've joined the bingo game.");
     }
 
     public void start() {
         plugin.getLogger().info("Starting Bingo game...");
 
-        playerState.forEach((player, _unused) -> {
-            playerState.put(player, createBingoCardForPlayer(player));
+        playerState.forEach((player, _unused) ->
+            playerState.put(player, createBingoCardForPlayer(player)));
+        playerView.forEach((player, _unused) -> {
+            playerView.put(player,
+                    createBingoCardViewForPlayer(player, playerState.get(player).items));
             initializePlayer(player);
             player.teleport(plugin.getBingoRandomGenerator().getLocation(player.getWorld()));
+            player.sendMessage("Bingo game started!");
         });
-        playerView.forEach((player, _unused) -> playerView.put(player,
-                createBingoCardViewForPlayer(player, playerState.get(player).items)));
 
         this.gameState = GameState.RUNNING;
     }

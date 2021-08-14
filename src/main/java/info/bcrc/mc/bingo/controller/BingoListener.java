@@ -22,11 +22,9 @@ import java.util.Objects;
 public class BingoListener implements Listener {
 
     protected Bingo plugin;
-    protected MessageSender messageSender;
 
     public BingoListener(Bingo plugin) {
         this.plugin = plugin;
-        messageSender = new MessageSender(plugin);
     }
 
     @EventHandler
@@ -116,10 +114,10 @@ public class BingoListener implements Listener {
 
     private void onPlayerFound(Player player, ItemStack item) {
         plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
-            messageSender.sendRawMessage(inGamePlayer, 
+            MessageSender.sendRawMessage(inGamePlayer, 
                     "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
                     + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
-                    + messageSender.getItemTranslationKey(item.getType()) + "\"}, {\"text\": \"] !\"}]}");
+                    + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}");
         });
     }
 }

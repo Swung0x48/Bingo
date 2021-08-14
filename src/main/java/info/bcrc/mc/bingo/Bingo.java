@@ -10,6 +10,7 @@ import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
 import info.bcrc.mc.bingo.controller.BingoListener;
 import info.bcrc.mc.bingo.util.BingoConfig;
 import info.bcrc.mc.bingo.util.BingoRandomGenerator;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public class Bingo extends JavaPlugin {
     public World bingoWorld;
@@ -55,6 +56,8 @@ public class Bingo extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(bingoListener, this);
 
         Objects.requireNonNull(getCommand("bingo")).setExecutor(bingoCommandExecutor);
+
+        new MessageSender(this);
     }
 
     @Override

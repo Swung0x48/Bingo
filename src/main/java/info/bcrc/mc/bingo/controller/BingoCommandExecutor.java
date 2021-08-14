@@ -3,6 +3,7 @@ package info.bcrc.mc.bingo.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -63,13 +64,13 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     if (sender instanceof Player)
                         p = (Player) sender;
                     if (p == null)
-                        sender.sendMessage("This command can only be issued by player.");
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "This command can only be issued by player.");
 
                     plugin.bingoGame.join(p);
                     break;
                 case "start":
                     if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
-                        sender.sendMessage("Error: The bingo has not been set up");
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: The bingo has not been set up");
 
                     plugin.bingoGame.start();
                     plugin.getLogger().info("afterStart: " + plugin.bingoGame.getGameState().name());

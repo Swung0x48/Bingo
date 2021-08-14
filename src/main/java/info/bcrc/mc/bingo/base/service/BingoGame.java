@@ -49,6 +49,7 @@ public abstract class BingoGame {
             return;
         }
 
+        plugin.getBingoItemGenerator().generateNewList();
         this.gameState = GameState.SETUP;
     }
 
@@ -68,6 +69,34 @@ public abstract class BingoGame {
                 playerView.put(player, createBingoCardViewForPlayer(player, playerState.get(player).items)));
 
         this.gameState = GameState.RUNNING;
+    }
+
+    public abstract BingoCard createBingoCardForPlayer(Player player);
+
+    public abstract BingoCardView createBingoCardViewForPlayer(Player player, ItemStack[] items);
+
+    public ArrayList<Player> getPlayersInGame() {
+        throw new NotImplementedException();
+    }
+
+    public boolean isPlayerInGame(Player player) {
+        throw new NotImplementedException();
+    }
+
+    public abstract void found(Player player, ItemStack item);
+
+    public void openBingoCard(Player player) {
+        BingoCardView view = playerView.get(player);
+        if (view != null)
+            view.openView();
+    }
+
+    public void stop() {
+        throw new NotImplementedException();
+    }
+
+    public void finish() {
+        this.gameState = GameState.FINISHED;
     }
 
     private void initializePlayer(Player player)
@@ -92,31 +121,5 @@ public abstract class BingoGame {
         player.setGameMode(GameMode.ADVENTURE);
 
         player.sendMessage("Click with the nether_star to check the bingo map");
-    }
-
-    public abstract BingoCard createBingoCardForPlayer(Player player);
-
-    public abstract BingoCardView createBingoCardViewForPlayer(Player player, ItemStack[] items);
-
-    public ArrayList<Player> getPlayersInGame() {
-        throw new NotImplementedException();
-    }
-
-    public boolean isPlayerInGame(Player player) {
-        throw new NotImplementedException();
-    }
-
-    public abstract void found(Player player, ItemStack item);
-
-    public void openBingoCard(Player player) {
-        playerView.get(player).openView();
-    }
-
-    public void stop() {
-        throw new NotImplementedException();
-    }
-
-    public void finish() {
-        this.gameState = GameState.FINISHED;
     }
 }

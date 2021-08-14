@@ -25,8 +25,11 @@ public abstract class BingoCard
         checked[index] = !checked[index];
     }
 
-    public void toggle(ItemStack item) {
-        toggle(Arrays.asList(items).indexOf(item));
+    public int toggle(ItemStack item) {
+        int index = Arrays.asList(items).indexOf(item);
+        if (index != -1)
+            toggle(index);
+        return index;
     }
 
     public abstract boolean hasFinished();

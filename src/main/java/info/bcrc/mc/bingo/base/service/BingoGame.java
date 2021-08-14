@@ -109,7 +109,7 @@ public abstract class BingoGame {
         return playerState.containsKey(player);
     }
 
-    public abstract void found(Player player, ItemStack item);
+    public abstract boolean found(Player player, ItemStack item);
 
     public void openBingoCard(Player player) {
         BingoCardView view = playerView.get(player);

@@ -13,6 +13,9 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Objects;
 
 public class BingoListener implements Listener {
 
@@ -96,15 +99,21 @@ public class BingoListener implements Listener {
             return;
         }
 
-        if (plugin.getItemDisplayer().testItem(event.getPlayer(), item)) {
+        if (plugin.getBingoGame().found(event.getPlayer(), item)) {
             // event.setCancelled(true);
-            plugin.getItemDisplayer().playerAchieve(event.getPlayer(), item);
+//            plugin.getItemDisplayer().playerAchieve(event.getPlayer(), item);
             // if (item.getAmount() == 1) {
+            onPlayerFound(event.getPlayer(), item);
             event.getItemDrop().remove();
             // } else {
             // item.setAmount(item.getAmount() - 1);
             // }
-            return;
         }
+    }
+
+    private void onPlayerFound(Player player, ItemStack item) {
+        plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
+            inGamePlayer.sendMessage(player.getName() + " found " + item.getType().name() + "!");
+        });
     }
 }

@@ -32,8 +32,11 @@ public class BingoGameClassic extends BingoGame {
     }
 
     @Override
-    public void found(Player player, ItemStack item) {
-        playerState.get(player).toggle(item);
-        playerView.get(player).toggle(item);
+    public boolean found(Player player, ItemStack item) {
+        int index = playerState.get(player).toggle(item);
+        if (index != -1)
+            playerView.get(player).toggle(index);
+
+        return index != -1;
     }
 }

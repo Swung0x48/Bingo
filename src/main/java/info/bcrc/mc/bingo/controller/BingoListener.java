@@ -24,6 +24,9 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
+        if (plugin.getBingoGame() == null)
+            return;
+
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 

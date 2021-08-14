@@ -34,10 +34,12 @@ public class BingoConfig {
         maxCoordinate = config.getDouble("coordinate-range.max");
 
         if (minCoordinate >= maxCoordinate) {
-            config.set("coordinate-range.min", 10);
-            config.set("coordinate-range.max", 20);
+            minCoordinate = 10;
+            maxCoordinate = 20;
+
+            config.set("coordinate-range.min", minCoordinate);
+            config.set("coordinate-range.max", maxCoordinate);
         }
-        assert minCoordinate < maxCoordinate;
     }
 
     public double getMinCoordinate() {
@@ -49,6 +51,6 @@ public class BingoConfig {
     };
 
     private final ArrayList<Material> candidateItems;
-    private final double minCoordinate;
-    private final double maxCoordinate;
+    private double minCoordinate;
+    private double maxCoordinate;
 }

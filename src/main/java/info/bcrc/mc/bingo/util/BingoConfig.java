@@ -2,9 +2,7 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import info.bcrc.mc.bingo.Bingo;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -14,6 +12,8 @@ public class BingoConfig {
     }
 
     public BingoConfig(FileConfiguration config) {
+        this.config = config;
+
         candidateItems = new ArrayList<>();
 
         List<String> items = config.getStringList("candidate-items");

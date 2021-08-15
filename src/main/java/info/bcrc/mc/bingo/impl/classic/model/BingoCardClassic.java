@@ -13,15 +13,15 @@ public class BingoCardClassic extends BingoCard
     @Override
     public void toggle(int index) {
         super.toggle(index);
-        hasWon = winInternal(index);
+        hasFinished = hasFinishedInternal(index);
     }
 
     @Override
-    public boolean win() {
-        return hasWon;
+    public boolean finished() {
+        return hasFinished;
     }
 
-    private boolean winInternal(int index) {
+    private boolean hasFinishedInternal(int index) {
         int absoluteX = indexToX(index);
         int absoluteY = indexToY(index);
 
@@ -95,6 +95,6 @@ public class BingoCardClassic extends BingoCard
         return getEffectiveX(x) + y == 4;
     }
 
-    private boolean hasWon = false;
+    private boolean hasFinished = false;
     private final static int X_INIT = 2;
 }

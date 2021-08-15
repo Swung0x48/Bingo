@@ -4,6 +4,7 @@ import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.util.MessageSender;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -121,8 +122,6 @@ public class BingoListener implements Listener {
     }
 
     private void onPlayerFinished(Player player) {
-        plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
-
-        });
+        MessageSender.broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
     }
 }

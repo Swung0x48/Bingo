@@ -44,7 +44,6 @@ public class BingoGameClassic extends BingoGame {
 
     @Override
     public boolean playerFinished(Player player) {
-        MessageSender.broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
         return getBingoCardByPlayer(player).finished();
     }
 }

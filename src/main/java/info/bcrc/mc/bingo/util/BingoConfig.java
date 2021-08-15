@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import info.bcrc.mc.bingo.Bingo;
 import org.bukkit.Material;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class BingoConfig {
@@ -37,12 +36,15 @@ public class BingoConfig {
         maxCoordinate = config.getDouble("coordinate-range.max");
 
         if (minCoordinate >= maxCoordinate) {
-            minCoordinate = 10;
-            maxCoordinate = 20;
+            MessageSender.logger.warning("Found maximum coordinate smaller than minimum. Swapping them.");
+            double tempCoordinate = minCoordinate;
+            minCoordinate = maxCoordinate;
+            maxCoordinate = tempCoordinate;
 
             config.set("coordinate-range.min", minCoordinate);
             config.set("coordinate-range.max", maxCoordinate);
         }
+        MessageSender.logger.info(Double.toString(minCoordinate) + " " + Double.toString(maxCoordinate));
     }
 
     public double getMinCoordinate() {

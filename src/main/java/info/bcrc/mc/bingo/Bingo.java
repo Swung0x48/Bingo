@@ -39,6 +39,8 @@ public class Bingo extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        new MessageSender(this);
+
 //        saveDefaultConfig();
         reloadConfig();
         bingoConfig = new BingoConfig(this.getConfig());
@@ -52,7 +54,6 @@ public class Bingo extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("bingo")).setExecutor(bingoCommandExecutor);
 
-        new MessageSender(this);
     }
 
     @Override

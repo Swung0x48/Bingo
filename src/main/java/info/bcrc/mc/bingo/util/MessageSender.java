@@ -1,5 +1,7 @@
 package info.bcrc.mc.bingo.util;
 
+import java.util.logging.Logger;
+
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
@@ -12,10 +14,13 @@ public class MessageSender {
     static Server server;
     static ConsoleCommandSender console;
 
+    static Logger logger;
+
     public MessageSender(Bingo plugin) {
         MessageSender.plugin = plugin;
         server = plugin.getServer();
         console = server.getConsoleSender();
+        logger = plugin.getLogger();
     }
 
     /**

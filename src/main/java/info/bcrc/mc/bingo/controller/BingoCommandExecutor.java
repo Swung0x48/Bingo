@@ -24,8 +24,9 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equals("bingo")) {
-            switch (args[0]) {
+        if (command.getName().equalsIgnoreCase("bingo") && args.length > 0) {
+            String bingoAction = args[0].toLowerCase();
+            switch (bingoAction) {
                 case "setup":
                     plugin.bingoGame = new BingoGameClassic(plugin);
                     plugin.bingoGame.setup();
@@ -58,7 +59,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     // p.sendMessage("Click with the nether_star to check the bingo map");
                     // }
                     // plugin.setupBingo = true;
-                    break;
+                    return true;
                 case "join":
                     Player p = null;
                     if (sender instanceof Player)
@@ -67,7 +68,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                         sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "This command can only be issued by player.");
 
                     plugin.bingoGame.join(p);
-                    break;
+                    return true;
                 case "start":
                     if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
                         sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: The bingo has not been set up");
@@ -109,7 +110,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     // sender.sendMessage("Error: The bingo has not been set up");
                     // }
                     // plugin.startBingo = true;
-                    break;
+                    return true;
                 case "exitworld":
                     // if ()
                     // {
@@ -123,10 +124,10 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     // {
                     // sender.sendMessage("Error: The bingo has not been start up");
                     // }
-                    break;
+                    return true;
                 case "status":
                     plugin.getLogger().info(plugin.bingoGame.getGameState().name());
-                    break;
+                    return true;
             }
         }
         return false;
@@ -134,9 +135,9 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (command.getName().equals("bingo")) {
+        if (command.getName().equalsIgnoreCase("bingo")) {
             if (args.length <= 1) {
-                return Arrays.asList("setup", "join", "start", "exitworld");
+                return Arrays.asList("setup", "join", "start", "exitworld", "status");
             }
         }
         return null;

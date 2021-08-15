@@ -5,7 +5,7 @@ main: info.bcrc.mc.bingo.Bingo
 api-version: 1.17
 commands:
   bingo:
-    description:
-    usage:
-    permission: project.permission
-    permission-message: You don't have <project.permission>
+    description: controls Bingo actions
+    usage: /bingo <setup|join|start|exitworld>
+    permission: bingo.permission
+    permission-message: You don't have the permission to run this command!

@@ -111,7 +111,7 @@ public abstract class BingoGame {
 
     public abstract boolean found(Player player, ItemStack item);
 
-    public abstract void onPlayerWin(Player player);
+    public abstract boolean playerFinished(Player player);
 
     public void openBingoCard(Player player) {
         BingoCardView view = playerView.get(player);

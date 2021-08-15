@@ -41,8 +41,8 @@ public class BingoGameClassic extends BingoGame {
     }
 
     @Override
-    public void onPlayerWin(Player player)
+    public boolean playerFinished(Player player)
     {
-
+        return getBingoCardByPlayer(player).finished();
     }
 }

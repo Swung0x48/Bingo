@@ -15,9 +15,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Objects;
 
 public class BingoListener implements Listener {
 
@@ -118,5 +115,14 @@ public class BingoListener implements Listener {
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                 + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
         );
+        if (plugin.getBingoGame().playerFinished(player)) {
+            onPlayerFinished(player);
+        }
+    }
+
+    private void onPlayerFinished(Player player) {
+        plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
+
+        });
     }
 }

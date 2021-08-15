@@ -44,7 +44,8 @@ public class Bingo extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
+//        saveDefaultConfig();
+        reloadConfig();
         bingoConfig = new BingoConfig(this.getConfig());
 
         saveConfig();

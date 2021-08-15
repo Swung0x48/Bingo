@@ -11,8 +11,16 @@ public class BingoCardClassic extends BingoCard
     }
 
     @Override
-    public boolean hasFinished()
-    {
+    public boolean win() {
         return false;
+    }
+
+    static class Cell {
+        int x;
+        int y;
+    }
+
+    private static Cell oneDimToXy(int index) {
+        return new Cell();
     }
 }

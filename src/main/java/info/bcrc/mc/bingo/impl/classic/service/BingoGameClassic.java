@@ -39,4 +39,10 @@ public class BingoGameClassic extends BingoGame {
 
         return index != -1;
     }
+
+    @Override
+    public void onPlayerWin(Player player)
+    {
+
+    }
 }

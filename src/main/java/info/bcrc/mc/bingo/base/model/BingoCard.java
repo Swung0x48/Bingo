@@ -32,5 +32,5 @@ public abstract class BingoCard
         return index;
     }
 
-    public abstract boolean hasFinished();
+    public abstract boolean win();
 }

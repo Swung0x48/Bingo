@@ -2,8 +2,11 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import info.bcrc.mc.bingo.Bingo;
 import org.bukkit.Material;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class BingoConfig {
@@ -11,7 +14,7 @@ public class BingoConfig {
         return candidateItems;
     }
 
-    public BingoConfig(FileConfiguration config) {
+    public BingoConfig(Configuration config) {
         candidateItems = new ArrayList<>();
 
         List<String> items = config.getStringList("candidate-items");
@@ -50,6 +53,7 @@ public class BingoConfig {
         return maxCoordinate;
     };
 
+    private Configuration config;
     private final ArrayList<Material> candidateItems;
     private double minCoordinate;
     private double maxCoordinate;

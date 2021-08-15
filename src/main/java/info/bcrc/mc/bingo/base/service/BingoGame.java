@@ -80,7 +80,7 @@ public abstract class BingoGame {
     }
 
     public void stop() {
-        throw new NotImplementedException();
+        this.gameState = GameState.UNINITIALIZED;
     }
 
     public void finish() {
@@ -112,6 +112,8 @@ public abstract class BingoGame {
     }
 
     public abstract boolean found(Player player, ItemStack item);
+
+    public abstract void onPlayerWin(Player player);
 
     public void openBingoCard(Player player) {
         BingoCardView view = playerView.get(player);

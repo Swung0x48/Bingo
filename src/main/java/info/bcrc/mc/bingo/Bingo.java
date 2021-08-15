@@ -14,7 +14,6 @@ import info.bcrc.mc.bingo.util.MessageSender;
 
 public class Bingo extends JavaPlugin {
     public World bingoWorld;
-    private ItemDisplayer itemDisplayer;
 
     public BingoGame getBingoGame() {
         return bingoGame;
@@ -38,10 +37,6 @@ public class Bingo extends JavaPlugin {
     public Bingo() {
     }
 
-    public ItemDisplayer getItemDisplayer() {
-        return itemDisplayer;
-    }
-
     @Override
     public void onEnable() {
 //        saveDefaultConfig();
@@ -50,7 +45,6 @@ public class Bingo extends JavaPlugin {
 
         saveConfig();
 
-        itemDisplayer = new ItemDisplayer(this);
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
         bingoRandomGenerator = new BingoRandomGenerator(getBingoConfig());

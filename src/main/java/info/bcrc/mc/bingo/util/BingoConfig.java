@@ -14,7 +14,7 @@ public class BingoConfig {
         return candidateItems;
     }
 
-    public BingoConfig(Configuration config) {
+    public BingoConfig(FileConfiguration config) {
         candidateItems = new ArrayList<>();
 
         List<String> items = config.getStringList("candidate-items");
@@ -53,7 +53,7 @@ public class BingoConfig {
         return maxCoordinate;
     };
 
-    private Configuration config;
+    private FileConfiguration config;
     private final ArrayList<Material> candidateItems;
     private double minCoordinate;
     private double maxCoordinate;

@@ -113,11 +113,10 @@ public class BingoListener implements Listener {
     }
 
     private void onPlayerFound(Player player, ItemStack item) {
-        plugin.getBingoGame().getPlayersInGame().forEach(inGamePlayer -> {
-            MessageSender.sendRawMessage(inGamePlayer, 
-                    "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
-                    + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
-                    + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}");
-        });
+        MessageSender.broadcastRawBingoMessage(
+            "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
+                + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
+                + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
+        );
     }
 }

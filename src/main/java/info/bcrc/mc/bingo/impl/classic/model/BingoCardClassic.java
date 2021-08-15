@@ -1,24 +1,34 @@
 package info.bcrc.mc.bingo.impl.classic.model;
 
 import info.bcrc.mc.bingo.base.model.BingoCard;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class BingoCardClassic extends BingoCard
 {
-    public BingoCardClassic(ItemStack[] items)
+    public BingoCardClassic(Player player, ItemStack[] items)
     {
-        super(items);
+        super(player, items);
     }
 
     @Override
     public void toggle(int index) {
         super.toggle(index);
-        hasFinished = hasFinishedInternal(index);
+
+        if (!hasFinished && hasFinishedInternal(index)) {
+            hasFinished = hasFinishedInternal(index);
+            onFinished();
+        }
     }
 
     @Override
-    public boolean finished() {
+    public boolean hasFinished() {
         return hasFinished;
+    }
+
+    @Override
+    public void onFinished()
+    {
     }
 
     private boolean hasFinishedInternal(int index) {

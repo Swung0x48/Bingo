@@ -1,6 +1,8 @@
 package info.bcrc.mc.bingo.controller;
 
 import info.bcrc.mc.bingo.Bingo;
+import info.bcrc.mc.bingo.base.event.BingoFinishedEvent;
+import info.bcrc.mc.bingo.base.event.BingoFoundEvent;
 import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.util.MessageSender;
 
@@ -65,21 +67,21 @@ public class BingoListener implements Listener {
     // 用不了似乎
     @EventHandler
     public void onInventoryMoveItemEvent(InventoryMoveItemEvent event) {
-        if (plugin.getItemDisplayer().testInv(event.getDestination())) {
-            event.setCancelled(true);
-
-            Player player = (Player) event.getSource().getHolder();
-            ItemStack item = event.getItem();
-
-            if (plugin.getItemDisplayer().testItem(player, item)) {
-                plugin.getItemDisplayer().playerAchieve(player, item);
-                if (item.getAmount() == 1) {
-                    event.getItem().setType(Material.AIR);
-                } else {
-                    item.setAmount(item.getAmount() - 1);
-                }
-            }
-        }
+//        if (plugin.getItemDisplayer().testInv(event.getDestination())) {
+//            event.setCancelled(true);
+//
+//            Player player = (Player) event.getSource().getHolder();
+//            ItemStack item = event.getItem();
+//
+//            if (plugin.getItemDisplayer().testItem(player, item)) {
+//                plugin.getItemDisplayer().playerAchieve(player, item);
+//                if (item.getAmount() == 1) {
+//                    event.getItem().setType(Material.AIR);
+//                } else {
+//                    item.setAmount(item.getAmount() - 1);
+//                }
+//            }
+//        }
     }
 
     @EventHandler
@@ -98,11 +100,11 @@ public class BingoListener implements Listener {
             return;
         }
 
-        if (plugin.getBingoGame().found(event.getPlayer(), item)) {
+        if (plugin.getBingoGame().playerThrows(event.getPlayer(), item)) {
             // event.setCancelled(true);
 //            plugin.getItemDisplayer().playerAchieve(event.getPlayer(), item);
             // if (item.getAmount() == 1) {
-            onPlayerFound(event.getPlayer(), item);
+//            onPlayerFound(event.getPlayer(), item);
             event.getItemDrop().remove();
             // } else {
             // item.setAmount(item.getAmount() - 1);
@@ -110,18 +112,20 @@ public class BingoListener implements Listener {
         }
     }
 
-    private void onPlayerFound(Player player, ItemStack item) {
+    @EventHandler
+    public void onPlayerFound(BingoFoundEvent e) {
+        Player player = e.getPlayer();
+        ItemStack item = e.getItem();
         MessageSender.broadcastRawBingoMessage(
             "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                 + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
         );
-        if (plugin.getBingoGame().playerFinished(player)) {
-            onPlayerFinished(player);
-        }
     }
 
-    private void onPlayerFinished(Player player) {
+    @EventHandler
+    public void onPlayerFinished(BingoFinishedEvent e) {
+        Player player = e.getPlayer();
         MessageSender.broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
     }
 }

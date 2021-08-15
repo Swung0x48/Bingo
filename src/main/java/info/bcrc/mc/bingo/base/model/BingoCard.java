@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.base.model;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -12,10 +13,12 @@ import java.util.Arrays;
 **/
 public abstract class BingoCard
 {
+    public Player player;
     public ItemStack[] items;
     public boolean[] checked;
 
-    public BingoCard(ItemStack[] items) {
+    public BingoCard(Player player, ItemStack[] items) {
+        this.player = player;
         this.items = items;
         this.checked = new boolean[items.length];
         Arrays.fill(checked, false);
@@ -32,5 +35,7 @@ public abstract class BingoCard
         return index;
     }
 
-    public abstract boolean finished();
+    public abstract boolean hasFinished();
+
+    public abstract void onFinished();
 }

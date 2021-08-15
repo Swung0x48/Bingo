@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.impl.classic.service;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -7,6 +8,7 @@ import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.base.view.BingoCardView;
 import info.bcrc.mc.bingo.impl.classic.model.BingoCardClassic;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public class BingoGameClassic extends BingoGame {
     Bingo plugin;
@@ -41,8 +43,8 @@ public class BingoGameClassic extends BingoGame {
     }
 
     @Override
-    public boolean playerFinished(Player player)
-    {
+    public boolean playerFinished(Player player) {
+        MessageSender.broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
         return getBingoCardByPlayer(player).finished();
     }
 }

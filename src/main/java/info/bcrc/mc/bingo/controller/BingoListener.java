@@ -35,12 +35,10 @@ public class BingoListener implements Listener {
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 
-        plugin.getLogger().info("onPlayerInteractEvent");
         if (item != null
                 && plugin.getBingoGame().getGameState() == BingoGame.GameState.RUNNING
                 && item.getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
-            plugin.getLogger().info("openBingoCard");
             plugin.getBingoGame().openBingoCard(player);
         }
     }
@@ -64,35 +62,15 @@ public class BingoListener implements Listener {
         }
     }
 
-    // 用不了似乎
     @EventHandler
-    public void onInventoryMoveItemEvent(InventoryMoveItemEvent event) {
-//        if (plugin.getItemDisplayer().testInv(event.getDestination())) {
-//            event.setCancelled(true);
-//
-//            Player player = (Player) event.getSource().getHolder();
-//            ItemStack item = event.getItem();
-//
-//            if (plugin.getItemDisplayer().testItem(player, item)) {
-//                plugin.getItemDisplayer().playerAchieve(player, item);
-//                if (item.getAmount() == 1) {
-//                    event.getItem().setType(Material.AIR);
-//                } else {
-//                    item.setAmount(item.getAmount() - 1);
-//                }
-//            }
-//        }
-    }
-
-    @EventHandler
-    public void on(PlayerSwapHandItemsEvent event) {
+    public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
         if (event.getOffHandItem().getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
         ItemStack item = event.getItemDrop().getItemStack();
 
         if (item.getType().equals(Material.NETHER_STAR)) {
@@ -101,14 +79,7 @@ public class BingoListener implements Listener {
         }
 
         if (plugin.getBingoGame().playerThrows(event.getPlayer(), item)) {
-            // event.setCancelled(true);
-//            plugin.getItemDisplayer().playerAchieve(event.getPlayer(), item);
-            // if (item.getAmount() == 1) {
-//            onPlayerFound(event.getPlayer(), item);
             event.getItemDrop().remove();
-            // } else {
-            // item.setAmount(item.getAmount() - 1);
-            // }
         }
     }
 

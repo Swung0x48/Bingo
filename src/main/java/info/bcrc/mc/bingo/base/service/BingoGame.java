@@ -2,7 +2,10 @@ package info.bcrc.mc.bingo.base.service;
 
 import java.util.HashMap;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -25,8 +28,8 @@ public abstract class BingoGame {
 
     protected Bingo plugin;
     protected GameState gameState;
-    protected HashMap<Player, BingoCard> playerState;
-    protected HashMap<Player, BingoCardView> playerView;
+    protected HashMap<UUID, BingoCard> playerState;
+    protected HashMap<UUID, BingoCardView> playerView;
 
     public BingoGame(Bingo plugin) {
         this.plugin = plugin;
@@ -55,25 +58,34 @@ public abstract class BingoGame {
     }
 
     public void join(Player player) {
-        playerState.put(player, null);
-        playerView.put(player, null);
+        if (!playerState.containsKey(player.getUniqueId()))
+            playerState.put(player.getUniqueId(), null);
+        if (!playerView.containsKey(player.getUniqueId()))
+            playerView.put(player.getUniqueId(), null);
         player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "You've joined the bingo game.");
     }
 
     public void start() {
         plugin.getLogger().info(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Starting Bingo game...");
 
-        playerState.forEach((player, _unused) ->
-            playerState.put(player, createBingoCardForPlayer(player)));
-        playerView.forEach((player, _unused) -> {
-            playerView.put(player,
-                    createBingoCardViewForPlayer(player, playerState.get(player).items));
-            initializePlayer(player);
-            player.teleport(plugin.getBingoRandomGenerator().getLocation(player.getWorld()));
-            player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Bingo game started!");
+        playerState.forEach((uuid, _unused) ->
+            playerState.put(uuid, createBingoCardForPlayer(uuid)));
+        playerView.forEach((uuid, _unused) -> {
+            playerView.put(uuid,
+                    createBingoCardViewForPlayer(Bukkit.getPlayer(uuid), playerState.get(uuid).items));
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                initializePlayer(player);
+                player.teleport(plugin.getBingoRandomGenerator().getLocation(player.getWorld()));
+                player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Bingo game started!");
+            }
         });
 
         this.gameState = GameState.RUNNING;
+    }
+
+    public void reconnectPlayer(Player player) {
+
     }
 
     public void stop() {
@@ -84,16 +96,16 @@ public abstract class BingoGame {
         this.gameState = GameState.FINISHED;
     }
 
-    public abstract BingoCard createBingoCardForPlayer(Player player);
+    public abstract BingoCard createBingoCardForPlayer(UUID uuid);
 
     public abstract BingoCardView createBingoCardViewForPlayer(Player player, ItemStack[] items);
 
     public BingoCard getBingoCardByPlayer(Player player) {
-        return playerState.get(player);
+        return playerState.get(player.getUniqueId());
     }
 
     public BingoCardView getBingoCardViewByPlayer(Player player) {
-        return playerView.get(player);
+        return playerView.get(player.getUniqueId());
     }
 
     public boolean cardViewBelongsToPlayer(Inventory inventory, Player player) {
@@ -101,11 +113,11 @@ public abstract class BingoGame {
     }
 
     public Set<Player> getPlayersInGame() {
-        return playerState.keySet();
+        return playerState.keySet().stream().map(Bukkit::getPlayer).collect(Collectors.toSet());
     }
 
     public boolean isPlayerInGame(Player player) {
-        return playerState.containsKey(player);
+        return playerState.containsKey(player.getUniqueId());
     }
 
     public abstract boolean playerThrows(Player player, ItemStack item);
@@ -117,7 +129,7 @@ public abstract class BingoGame {
     public abstract void onPlayerFinished(Player player);
 
     public void openBingoCard(Player player) {
-        BingoCardView view = playerView.get(player);
+        BingoCardView view = playerView.get(player.getUniqueId());
         if (view != null)
             view.openView();
     }

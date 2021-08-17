@@ -1,6 +1,7 @@
 package info.bcrc.mc.bingo.base.view;
 
 import info.bcrc.mc.bingo.Bingo;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,12 +9,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.UUID;
+
 public class BingoCardView
 {
     public BingoCardView(Bingo plugin, Player player, ItemStack[] items) {
         inventory = plugin.getServer().createInventory(null, 45, player.getName() + "'s Bingo Card");
         inventory.setContents(items);
-        this.player = player;
+        this.uuid = player.getUniqueId();
     }
 
     public Inventory getInventory() {
@@ -43,9 +46,11 @@ public class BingoCardView
     }
 
     public void openView() {
-        player.openInventory(inventory);
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null)
+            player.openInventory(inventory);
     }
 
     protected Inventory inventory;
-    protected Player player;
+    protected UUID uuid;
 }

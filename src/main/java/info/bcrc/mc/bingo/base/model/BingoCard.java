@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * BingoCard
@@ -13,12 +14,12 @@ import java.util.Arrays;
 **/
 public abstract class BingoCard
 {
-    public Player player;
+    public UUID Uuid;
     public ItemStack[] items;
     public boolean[] checked;
 
-    public BingoCard(Player player, ItemStack[] items) {
-        this.player = player;
+    public BingoCard(UUID Uuid, ItemStack[] items) {
+        this.Uuid = Uuid;
         this.items = items;
         this.checked = new boolean[items.length];
         Arrays.fill(checked, false);

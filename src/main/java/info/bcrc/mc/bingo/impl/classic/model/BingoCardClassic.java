@@ -1,14 +1,15 @@
 package info.bcrc.mc.bingo.impl.classic.model;
 
 import info.bcrc.mc.bingo.base.model.BingoCard;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 public class BingoCardClassic extends BingoCard
 {
-    public BingoCardClassic(Player player, ItemStack[] items)
+    public BingoCardClassic(UUID Uuid, ItemStack[] items)
     {
-        super(player, items);
+        super(Uuid, items);
     }
 
     @Override

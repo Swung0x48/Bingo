@@ -5,6 +5,8 @@ import info.bcrc.mc.bingo.base.view.BingoCardView;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class BingoCardViewClassic extends BingoCardView
 {
     public BingoCardViewClassic(Bingo plugin, Player player, ItemStack[] items) {

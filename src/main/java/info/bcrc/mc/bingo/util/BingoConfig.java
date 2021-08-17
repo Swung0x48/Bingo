@@ -1,10 +1,10 @@
 package info.bcrc.mc.bingo.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BingoConfig {
     public ArrayList<Material> getCandidateItems() {

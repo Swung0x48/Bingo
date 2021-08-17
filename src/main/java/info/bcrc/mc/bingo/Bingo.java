@@ -1,8 +1,11 @@
 package info.bcrc.mc.bingo;
 
+import java.io.File;
 import java.util.Objects;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import info.bcrc.mc.bingo.base.service.BingoGame;
@@ -23,6 +26,11 @@ public class Bingo extends JavaPlugin {
     private BingoConfig bingoConfig;
     private BingoCommandExecutor bingoCommandExecutor;
     private BingoListener bingoListener;
+    private MessageSender messageSender;
+
+    public MessageSender getMessageSender() {
+        return messageSender;
+    }
 
     public BingoRandomGenerator getBingoRandomGenerator() {
         return bingoRandomGenerator;
@@ -39,7 +47,7 @@ public class Bingo extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new MessageSender(this);
+        messageSender = new MessageSender(this);
 
 //        saveDefaultConfig();
         reloadConfig();

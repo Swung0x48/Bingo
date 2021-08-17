@@ -10,14 +10,14 @@ import org.bukkit.entity.Player;
 import info.bcrc.mc.bingo.Bingo;
 
 public class MessageSender {
-    static Bingo plugin;
-    static Server server;
-    static ConsoleCommandSender console;
+    Bingo plugin;
+    Server server;
+    ConsoleCommandSender console;
 
     static Logger logger;
 
     public MessageSender(Bingo plugin) {
-        MessageSender.plugin = plugin;
+        this.plugin = plugin;
         server = plugin.getServer();
         console = server.getConsoleSender();
         logger = plugin.getLogger();
@@ -41,7 +41,7 @@ public class MessageSender {
      * @param player
      * @param json raw JSON message
      */
-    public static void sendRawMessage(Player player, String json) {
+    public void sendRawMessage(Player player, String json) {
         server.dispatchCommand(console, "tellraw " + player.getName() + " " + json);
     }
 
@@ -49,7 +49,7 @@ public class MessageSender {
      * Broadcast a message to players <i>but not the console</i>.
      * @param message
      */
-    public static void broadcastMessage(String message) {
+    public void broadcastMessage(String message) {
         server.getOnlinePlayers().forEach(player -> {
             player.sendMessage(message);
         });
@@ -59,7 +59,7 @@ public class MessageSender {
      * Broadcast a raw JSON message to players by using <i>/tellraw</i>.
      * @param json raw JSON message
      */
-    public static void broadcastRawMessage(String json) {
+    public void broadcastRawMessage(String json) {
         server.dispatchCommand(console, "tellraw @a " + json);
     }
 
@@ -67,7 +67,7 @@ public class MessageSender {
      * Broadcast a message to <i>current Bingo players</i>.
      * @param message
      */
-    public static void broadcastBingoMessage(String message) {
+    public void broadcastBingoMessage(String message) {
         plugin.getBingoGame().getPlayersInGame().forEach(player -> {
             player.sendMessage(message);
         });
@@ -77,7 +77,7 @@ public class MessageSender {
      * Broadcast a raw JSON message to <i>current Bingo players</i> by using <i>/tellraw</i>.
      * @param json raw JSON message
      */
-    public static void broadcastRawBingoMessage(String json) {
+    public void broadcastRawBingoMessage(String json) {
         plugin.getBingoGame().getPlayersInGame().forEach(player -> {
             sendRawMessage(player, json);
         });

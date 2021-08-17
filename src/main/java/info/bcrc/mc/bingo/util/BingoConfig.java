@@ -22,7 +22,6 @@ public class BingoConfig {
             for (Material item : Material.values()) {
                 allMaterials.add(item.name());
             }
-            System.out.println("Size: " + allMaterials.size());
             config.set("candidate-items", allMaterials.toArray(new String[0]));
             items = allMaterials;
         }

@@ -65,7 +65,8 @@ public class Bingo extends JavaPlugin {
 
         try
         {
-            if (!itemFile.exists()) {
+            if (itemFile.exists()) {
+                this.getLogger().info("Loading items from plugins/bingo/items.csv...");
                 stream = new FileInputStream(itemFile);
             } else {
                 this.getLogger().warning("item.csv not found.");
@@ -81,6 +82,7 @@ public class Bingo extends JavaPlugin {
         } catch (IOException e)
         {
             this.getLogger().warning("An IO exception occurred when reading item list.");
+            e.printStackTrace();
         }
         finally
         {

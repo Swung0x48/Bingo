@@ -17,9 +17,15 @@ public class BingoItemManager
         Scanner scanner = new Scanner(stream);
         candidateItems = new ArrayList<>();
         while (scanner.hasNextLine()) {
-            Material mat = Material.getMaterial(scanner.nextLine());
+            String line = scanner.nextLine();
+//            System.out.println(line);
+            Material mat = Material.getMaterial(line);
             if (mat != null)
+            {
+//                System.out.println("mat:" + mat.name());
                 candidateItems.add(mat);
+            }
+//            System.out.println("sz: " + candidateItems.size());
         }
     }
 

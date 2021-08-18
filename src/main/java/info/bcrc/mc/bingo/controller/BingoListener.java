@@ -92,11 +92,14 @@ public class BingoListener implements Listener {
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                 + plugin.getMessageSender().getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
         );
+        plugin.getMessageSender().broadcastBingoSound("entity.firework_rocket.launch");
     }
 
     @EventHandler
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
         plugin.getMessageSender().broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
+        plugin.getMessageSender().broadcastBingoTitle("", ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
+        plugin.getMessageSender().broadcastBingoSound("entity.firework_rocket.twinkle_far");
     }
 }

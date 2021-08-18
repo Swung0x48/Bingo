@@ -2,6 +2,7 @@ package info.bcrc.mc.bingo.util;
 
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -84,6 +85,15 @@ public class MessageSender {
     public void broadcastBingoTitle(String title, String subtitle) {
         plugin.getBingoGame().getPlayersInGame().forEach(player -> {
             player.sendTitle(title, subtitle, 10, 70, 20);
+        });
+    }
+
+    /**
+     * Play a sound to <i>current Bingo players</i>.
+     */
+    public void broadcastBingoSound(String sound) {
+        plugin.getBingoGame().getPlayersInGame().forEach(player -> {
+            player.playSound(player.getLocation(), sound, SoundCategory.MASTER, 1.0f, 1.0f);
         });
     }
 }

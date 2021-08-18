@@ -59,7 +59,7 @@ public class Bingo extends JavaPlugin {
 
 //        saveDefaultConfig();
         reloadConfig();
-        bingoConfig = new BingoConfig(this.getConfig());
+        bingoConfig = new BingoConfig(this, this.getConfig());
         File itemFile = new File(this.getDataFolder() + "/item.csv");
         InputStream stream = null;
 

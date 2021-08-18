@@ -1,7 +1,5 @@
 package info.bcrc.mc.bingo.util;
 
-import java.util.logging.Logger;
-
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,13 +12,10 @@ public class MessageSender {
     Server server;
     ConsoleCommandSender console;
 
-    static Logger logger;
-
     public MessageSender(Bingo plugin) {
         this.plugin = plugin;
         server = plugin.getServer();
         console = server.getConsoleSender();
-        logger = plugin.getLogger();
     }
 
     /**
@@ -30,7 +25,7 @@ public class MessageSender {
      *  depending on whether the material is a type of block or item.
      */
 
-    public static String getItemTranslationKey(Material material) {
+    public String getItemTranslationKey(Material material) {
         if (material.isBlock())
             return "block.minecraft." + material.getKey().getKey();
         return "item.minecraft." + material.getKey().getKey();

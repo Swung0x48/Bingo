@@ -3,6 +3,8 @@ package info.bcrc.mc.bingo.util;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import info.bcrc.mc.bingo.Bingo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ public class BingoConfig {
 //        return candidateItems;
 //    }
 
-    public BingoConfig(FileConfiguration config) {
+    public BingoConfig(Bingo plugin, FileConfiguration config) {
 //        candidateItems = new ArrayList<>();
 //
 //        List<String> items = config.getStringList("candidate-items");
@@ -33,7 +35,7 @@ public class BingoConfig {
         maxCoordinate = config.getDouble("coordinate-range.max");
 
         if (minCoordinate >= maxCoordinate) {
-            MessageSender.logger.warning("Found maximum coordinate smaller than minimum. Swapping them.");
+            plugin.getLogger().warning("Found maximum coordinate smaller than minimum. Swapping them.");
             double tempCoordinate = minCoordinate;
             minCoordinate = maxCoordinate;
             maxCoordinate = tempCoordinate;
@@ -41,7 +43,6 @@ public class BingoConfig {
             config.set("coordinate-range.min", minCoordinate);
             config.set("coordinate-range.max", maxCoordinate);
         }
-        MessageSender.logger.info(minCoordinate + " " + maxCoordinate);
     }
 
     public double getMinCoordinate() {

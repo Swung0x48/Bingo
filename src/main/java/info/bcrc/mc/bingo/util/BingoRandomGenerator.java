@@ -2,6 +2,7 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Location;
@@ -10,8 +11,8 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 public class BingoRandomGenerator {
-    public BingoRandomGenerator(BingoConfig config) {
-        candidateItems = config.getCandidateItems();
+    public BingoRandomGenerator(BingoConfig config, BingoItemManager itemManager) {
+        candidateItems = itemManager.getCandidateItems();
         minCoordinate = config.getMinCoordinate();
         maxCoordinate = config.getMaxCoordinate();
     }

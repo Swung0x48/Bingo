@@ -7,29 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BingoConfig {
-    public ArrayList<Material> getCandidateItems() {
-        return candidateItems;
-    }
+//    public ArrayList<Material> getCandidateItems() {
+//        return candidateItems;
+//    }
 
     public BingoConfig(FileConfiguration config) {
-        this.config = config;
-
-        candidateItems = new ArrayList<>();
-
-        List<String> items = config.getStringList("candidate-items");
-        if (items.size() < 25) {
-            ArrayList<String> allMaterials = new ArrayList<>();
-            for (Material item : Material.values()) {
-                allMaterials.add(item.name());
-            }
-            config.set("candidate-items", allMaterials.toArray(new String[0]));
-            items = allMaterials;
-        }
-        for (String item : items) {
-            if (item != null) {
-                candidateItems.add(Material.getMaterial(item));
-            }
-        }
+//        candidateItems = new ArrayList<>();
+//
+//        List<String> items = config.getStringList("candidate-items");
+//        if (items.size() < 25) {
+//            ArrayList<String> allMaterials = new ArrayList<>();
+//            for (Material item : Material.values()) {
+//                allMaterials.add(item.name());
+//            }
+//            config.set("candidate-items", allMaterials.toArray(new String[0]));
+//            items = allMaterials;
+//        }
+//        for (String item : items) {
+//            if (item != null) {
+//                candidateItems.add(Material.getMaterial(item));
+//            }
+//        }
 
         minCoordinate = config.getDouble("coordinate-range.min");
         maxCoordinate = config.getDouble("coordinate-range.max");
@@ -43,7 +41,7 @@ public class BingoConfig {
             config.set("coordinate-range.min", minCoordinate);
             config.set("coordinate-range.max", maxCoordinate);
         }
-        MessageSender.logger.info(Double.toString(minCoordinate) + " " + Double.toString(maxCoordinate));
+        MessageSender.logger.info(minCoordinate + " " + maxCoordinate);
     }
 
     public double getMinCoordinate() {
@@ -54,8 +52,7 @@ public class BingoConfig {
         return maxCoordinate;
     };
 
-    private FileConfiguration config;
-    private final ArrayList<Material> candidateItems;
+//    private final ArrayList<Material> candidateItems;
     private double minCoordinate;
     private double maxCoordinate;
 }

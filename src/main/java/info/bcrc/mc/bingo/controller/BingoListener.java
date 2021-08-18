@@ -87,7 +87,7 @@ public class BingoListener implements Listener {
     public void onPlayerFound(BingoFoundEvent e) {
         Player player = e.getPlayer();
         ItemStack item = e.getItem();
-        MessageSender.broadcastRawBingoMessage(
+        plugin.getMessageSender().broadcastRawBingoMessage(
             "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                 + MessageSender.getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
@@ -97,6 +97,6 @@ public class BingoListener implements Listener {
     @EventHandler
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
-        MessageSender.broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
+        plugin.getMessageSender().broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
     }
 }

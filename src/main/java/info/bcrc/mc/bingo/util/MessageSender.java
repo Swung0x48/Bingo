@@ -64,22 +64,21 @@ public class MessageSender {
     }
 
     /**
-     * Broadcast a message to <i>current Bingo players</i>.
-     * @param message
-     */
-    public void broadcastBingoMessage(String message) {
-        plugin.getBingoGame().getPlayersInGame().forEach(player -> {
-            player.sendMessage(message);
-        });
-    }
-
-    /**
      * Broadcast a raw JSON message to <i>current Bingo players</i> by using <i>/tellraw</i>.
      * @param json raw JSON message
      */
     public void broadcastRawBingoMessage(String json) {
         plugin.getBingoGame().getPlayersInGame().forEach(player -> {
             sendRawMessage(player, json);
+        });
+    }
+
+    /**
+     * Show a title to <i>current Bingo players</i>.
+     */
+    public void broadcastBingoTitle(String title, String subtitle) {
+        plugin.getBingoGame().getPlayersInGame().forEach(player -> {
+            player.sendTitle(title, subtitle, 10, 70, 20);
         });
     }
 }

@@ -92,7 +92,7 @@ public class Bingo extends JavaPlugin {
         }
 
         saveConfig();
-        bingoItemManager = new BingoItemManager(stream);
+        bingoItemManager = new BingoItemManager(stream, this.getLogger());
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
         bingoRandomGenerator = new BingoRandomGenerator(getBingoConfig(), getBingoItemManager());

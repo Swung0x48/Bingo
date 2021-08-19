@@ -3,30 +3,29 @@ package info.bcrc.mc.bingo.util;
 import org.bukkit.Material;
 
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.logging.Logger;
 
 public class BingoItemManager
 {
-    public BingoItemManager() {
+    public BingoItemManager(Logger logger) {
         candidateItems = new ArrayList<>();
         Collections.addAll(candidateItems, Material.values());
+        logger.info(MessageFormat.format("Loaded {0} items.", candidateItems.size()));
     }
 
-    public BingoItemManager(InputStream stream) {
+    public BingoItemManager(InputStream stream, Logger logger) {
         Scanner scanner = new Scanner(stream);
         candidateItems = new ArrayList<>();
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-//            System.out.println(line);
             Material mat = Material.getMaterial(line.toUpperCase());
-            if (mat != null)
-            {
-//                System.out.println("mat:" + mat.name());
+            if (mat != null) {
                 candidateItems.add(mat);
             }
-//            System.out.println("sz: " + candidateItems.size());
         }
+        logger.info(MessageFormat.format("Loaded {0} items.", candidateItems.size()));
     }
 
     public ArrayList<Material> getCandidateItems() {

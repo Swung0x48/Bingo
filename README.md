@@ -1,7 +1,8 @@
 # Bingo!
 
-Bingo plugin in Minecraft
-(test text only)
+Bingo plugin in Minecraft, inspired by [MetriCfan/Bingo](https://github.com/MetriCfan/Bingo/wiki).
+
+![Bingo Card Image](images/bingo_card.png "Bingo Card Example")
 
 # Requirement
 

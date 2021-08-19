@@ -72,10 +72,14 @@ public class Bingo extends JavaPlugin {
                 this.getLogger().warning("item.csv not found.");
                 this.getLogger().warning("Loading defaults...");
                 stream = this.getResource("item.csv");
-                FileOutputStream outputStream = new FileOutputStream(itemFile);
+
+                itemFile.getParentFile().mkdirs();
+                FileOutputStream outputStream = new FileOutputStream(itemFile, false);
                 if (stream != null) {
                     byte[] bytes = stream.readAllBytes();
                     outputStream.write(bytes);
+                    outputStream.close();
+                    stream = this.getResource("item.csv");
                 }
             }
 

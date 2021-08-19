@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.base.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
@@ -142,8 +143,10 @@ public abstract class BingoGame {
 
         ItemStack bingoGuide = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = bingoGuide.getItemMeta();
-        if (meta != null)
-            meta.setDisplayName("Bingo Card");
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.RESET + "Bingo Card");
+            meta.setLore(Arrays.asList(ChatColor.RESET + "Click to view the bingo map"));
+        }
         bingoGuide.setItemMeta(meta);
         player.getInventory().setItem(8, bingoGuide);
 

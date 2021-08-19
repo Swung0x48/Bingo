@@ -66,6 +66,8 @@ public class Bingo extends JavaPlugin {
 //        saveDefaultConfig();
         reloadConfig();
         bingoConfig = new BingoConfig(this, this.getConfig());
+        saveConfig();
+
         File itemFile = new File(this.getDataFolder() + "/item.csv");
         InputStream stream = null;
 
@@ -73,17 +75,20 @@ public class Bingo extends JavaPlugin {
         {
             if (itemFile.exists()) {
                 this.getLogger().info("Loading items from " + itemFile.getPath() + "...");
-                stream = new FileInputStream(itemFile);
             } else {
                 this.getLogger().warning("item.csv not found.");
                 this.getLogger().warning("Loading defaults...");
                 stream = this.getResource("item.csv");
-                FileOutputStream outputStream = new FileOutputStream(itemFile);
+
+                itemFile.getParentFile().mkdirs();
+                FileOutputStream outputStream = new FileOutputStream(itemFile, false);
                 if (stream != null) {
                     byte[] bytes = stream.readAllBytes();
                     outputStream.write(bytes);
+                    outputStream.close();
                 }
             }
+            stream = new FileInputStream(itemFile);
 
         } catch (IOException e)
         {
@@ -97,7 +102,6 @@ public class Bingo extends JavaPlugin {
             }
         }
 
-        saveConfig();
         bingoItemManager = new BingoItemManager(stream, this.getLogger());
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);

@@ -99,7 +99,7 @@ public class BingoListener implements Listener {
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
         plugin.getMessageSender().broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
-        plugin.getMessageSender().broadcastBingoTitle("Bingo", ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
+        plugin.getMessageSender().broadcastBingoTitle(" ", ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.twinkle_far");
     }
 }

@@ -19,7 +19,7 @@ public class BingoItemManager
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 //            System.out.println(line);
-            Material mat = Material.getMaterial(line);
+            Material mat = Material.getMaterial(line.toUpperCase());
             if (mat != null)
             {
 //                System.out.println("mat:" + mat.name());

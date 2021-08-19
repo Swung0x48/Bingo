@@ -66,7 +66,7 @@ public class Bingo extends JavaPlugin {
         try
         {
             if (itemFile.exists()) {
-                this.getLogger().info("Loading items from plugins/bingo/items.csv...");
+                this.getLogger().info("Loading items from " + itemFile.getPath() + "...");
                 stream = new FileInputStream(itemFile);
             } else {
                 this.getLogger().warning("item.csv not found.");

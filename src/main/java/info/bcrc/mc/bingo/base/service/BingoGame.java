@@ -1,9 +1,6 @@
 package info.bcrc.mc.bingo.base.service;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -20,7 +17,6 @@ import org.bukkit.potion.PotionEffectType;
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.model.BingoCard;
 import info.bcrc.mc.bingo.base.view.BingoCardView;
-import info.bcrc.mc.bingo.util.MessageSender;
 
 public abstract class BingoGame {
     public enum GameState {
@@ -51,7 +47,16 @@ public abstract class BingoGame {
             return;
         }
 
-        plugin.getBingoRandomGenerator().generateNewList();
+        ArrayList<ItemStack> list = plugin.getBingoRandomGenerator().generateNewList();
+        plugin.getLogger().info("Item generated: ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); ++i) {
+            if (i % 9 == 0) {
+                plugin.getLogger().info(sb.toString());
+                sb.setLength(0);
+            }
+            sb.append(list.get(i).getType().name()).append(' ');
+        }
         this.gameState = GameState.SETUP;
 
         plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "A bingo game has been set up.");
@@ -145,7 +150,7 @@ public abstract class BingoGame {
         ItemMeta meta = bingoGuide.getItemMeta();
         if (meta != null) {
             meta.setDisplayName(ChatColor.RESET + "Bingo Card");
-            meta.setLore(Arrays.asList(ChatColor.RESET + "Click to view the bingo map"));
+            meta.setLore(List.of(ChatColor.RESET + "Click to view the bingo card"));
         }
         bingoGuide.setItemMeta(meta);
         player.getInventory().setItem(8, bingoGuide);

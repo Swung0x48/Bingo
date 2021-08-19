@@ -89,11 +89,18 @@ public class MessageSender {
     }
 
     /**
+     * Play a sound to <i>specified players</i>.
+     */
+    public void playBingoSound(Player player, String sound) {
+        player.playSound(player.getLocation(), sound, SoundCategory.MASTER, 1.0f, 1.0f);
+    }
+
+    /**
      * Play a sound to <i>current Bingo players</i>.
      */
     public void broadcastBingoSound(String sound) {
         plugin.getBingoGame().getPlayersInGame().forEach(player -> {
-            player.playSound(player.getLocation(), sound, SoundCategory.MASTER, 1.0f, 1.0f);
+            playBingoSound(player, sound);
         });
     }
 }

@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import info.bcrc.mc.bingo.base.service.BingoGame;
+import info.bcrc.mc.bingo.base.view.BingoScoreboard;
 import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
 import info.bcrc.mc.bingo.controller.BingoListener;
 import info.bcrc.mc.bingo.util.BingoConfig;
@@ -31,6 +32,7 @@ public class Bingo extends JavaPlugin {
     private MessageSender messageSender;
     private BingoRandomGenerator bingoRandomGenerator;
     private BingoItemManager bingoItemManager;
+    private BingoScoreboard bingoScoreboard;
 
     public BingoItemManager getBingoItemManager() {
         return bingoItemManager;
@@ -48,6 +50,10 @@ public class Bingo extends JavaPlugin {
 
     public BingoConfig getBingoConfig() {
         return bingoConfig;
+    }
+
+    public BingoScoreboard getBingoScoreboard() {
+        return bingoScoreboard;
     }
 
     public Bingo() {
@@ -95,6 +101,7 @@ public class Bingo extends JavaPlugin {
         bingoItemManager = new BingoItemManager(stream, this.getLogger());
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
+        bingoScoreboard = new BingoScoreboard(this);
         bingoRandomGenerator = new BingoRandomGenerator(getBingoConfig(), getBingoItemManager());
         this.getServer().getPluginManager().registerEvents(bingoListener, this);
 

@@ -68,6 +68,7 @@ public abstract class BingoGame {
 
     public void start() {
         plugin.getLogger().info(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Starting Bingo game...");
+        plugin.getBingoScoreboard().init();
 
         playerState.forEach((uuid, _unused) ->
             playerState.put(uuid, createBingoCardForPlayer(uuid)));

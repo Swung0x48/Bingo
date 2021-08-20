@@ -53,11 +53,13 @@ public class BingoRandomGenerator {
     }
 
     public Location generateRandomNonLiquidLocation(World world) {
-        Location location = generateRandomLocation(world);
+        for (int i = 0; i < 20; ++i) {
+            location = generateRandomLocation(world);
 
-        if (!world.getBlockAt(location).isLiquid())
-            return location.add(0, 1, 0);
-        return generateRandomNonLiquidLocation(world);
+            if (!world.getBlockAt(location).isLiquid())
+                return location.add(0, 1, 0);
+        }
+        return location.add(0, 1, 0);
     }
 
     public Location getLocation(World world) {

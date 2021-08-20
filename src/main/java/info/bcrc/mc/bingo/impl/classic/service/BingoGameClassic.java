@@ -2,6 +2,7 @@ package info.bcrc.mc.bingo.impl.classic.service;
 
 import info.bcrc.mc.bingo.base.event.BingoFinishedEvent;
 import info.bcrc.mc.bingo.base.event.BingoFoundEvent;
+import info.bcrc.mc.bingo.impl.classic.event.BingoFoundClassicEvent;
 import info.bcrc.mc.bingo.impl.classic.view.BingoCardViewClassic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,10 +40,11 @@ public class BingoGameClassic extends BingoGame {
     @Override
     public boolean playerThrows(Player player, ItemStack item) {
         boolean finished = hasPlayerFinished(player);
-        int index = playerState.get(player.getUniqueId()).setFound(item);
+        BingoCardClassic bingoCard = (BingoCardClassic) playerState.get(player.getUniqueId());
+        int index = bingoCard.setFound(item);
         if (index != -1) {
-            onFound(player, item);
-            playerView.get(player.getUniqueId()).setFound(index);
+            onFound(player, item, bingoCard.getItemsToWin());
+            bingoCard.setFound(index);
             if (!finished && hasPlayerFinished(player)) {
                 onPlayerFinished(player);
             }
@@ -51,9 +53,8 @@ public class BingoGameClassic extends BingoGame {
         return index != -1;
     }
 
-    @Override
-    public void onFound(Player player, ItemStack item) {
-        Bukkit.getPluginManager().callEvent(new BingoFoundEvent(player, item));
+    public void onFound(Player player, ItemStack item, int itemsToWin) {
+        Bukkit.getPluginManager().callEvent(new BingoFoundClassicEvent(player, item, itemsToWin));
     }
 
     @Override

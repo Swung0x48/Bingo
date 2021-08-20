@@ -138,8 +138,6 @@ public abstract class BingoGame {
 
     public abstract boolean playerThrows(Player player, ItemStack item);
 
-    public abstract void onFound(Player player, ItemStack item);
-
     public abstract boolean hasPlayerFinished(Player player);
 
     public abstract void onPlayerFinished(Player player);

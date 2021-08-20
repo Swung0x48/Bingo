@@ -4,6 +4,7 @@ import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.event.BingoFinishedEvent;
 import info.bcrc.mc.bingo.base.event.BingoFoundEvent;
 import info.bcrc.mc.bingo.base.service.BingoGame;
+import info.bcrc.mc.bingo.impl.classic.event.BingoFoundClassicEvent;
 import info.bcrc.mc.bingo.util.MessageSender;
 
 import org.bukkit.ChatColor;
@@ -89,16 +90,17 @@ public class BingoListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerFound(BingoFoundEvent e) {
+    public void onPlayerFoundClassic(BingoFoundClassicEvent e) {
         Player player = e.getPlayer();
         ItemStack item = e.getItem();
+        int itemsToWin = e.getItemsToWin();
         plugin.getMessageSender().broadcastRawBingoMessage(
             "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                 + plugin.getMessageSender().getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
         );
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.launch");
-        plugin.getBingoScoreboard().increaseScore(player);
+//        plugin.getBingoScoreboard().increaseScore(player);
     }
 
     @EventHandler

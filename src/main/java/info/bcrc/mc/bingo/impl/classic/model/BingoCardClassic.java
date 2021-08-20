@@ -17,8 +17,8 @@ public class BingoCardClassic extends BingoCard
         if (!super.setFound(index))
             return false;
 
-        if (!hasFinished && hasFinishedInternal(index)) {
-            hasFinished = hasFinishedInternal(index);
+        if (!hasFinished() && itemsToWinInternal(index) == 0) {
+            itemsToWin = itemsToWinInternal(index);
             onFinished();
         }
         return true;
@@ -26,7 +26,11 @@ public class BingoCardClassic extends BingoCard
 
     @Override
     public boolean hasFinished() {
-        return hasFinished;
+        return itemsToWin == 0;
+    }
+
+    public int getItemsToWin() {
+        return itemsToWin;
     }
 
     @Override
@@ -34,51 +38,48 @@ public class BingoCardClassic extends BingoCard
     {
     }
 
-    private boolean hasFinishedInternal(int index) {
+    private int itemsToWinInternal(int index) {
         int absoluteX = indexToX(index);
         int absoluteY = indexToY(index);
+        int remaining = 5;
 
-        boolean won = true;
+        int localRemaining = 0;
         for (int i = 0; i < 5; ++i) {
             if (!checked[xyToIndex(getAbsoluteX(i), absoluteY)]) {
-                won = false;
-                break;
+                ++localRemaining;
             }
         }
-        if (won) return true;
+        remaining = Math.min(remaining, localRemaining);
 
-        won = true;
+        localRemaining = 0;
         for (int j = 0; j < 5; ++j) {
             if (!checked[xyToIndex(absoluteX, j)]) {
-                won = false;
-                break;
+                ++localRemaining;
             }
         }
-        if (won) return true;
+        remaining = Math.min(remaining, localRemaining);
 
         if (atMainDiagonal(absoluteX, absoluteY)) {
-            won = true;
+            localRemaining = 0;
             for (int i = 0; i < 5; ++i) {
                 if (!checked[xyToIndex(getAbsoluteX(i), i)]) {
-                    won = false;
-                    break;
+                    ++localRemaining;
                 }
             }
-            if (won) return true;
+            remaining = Math.min(remaining, localRemaining);
         }
 
         if (atAntiDiagonal(absoluteX, absoluteY)) {
-            won = true;
+            localRemaining = 0;
             for (int i = 0; i < 5; ++i) {
                 if (!checked[xyToIndex(getAbsoluteX(i), 4 - i)]) {
-                    won = false;
-                    break;
+                    ++localRemaining;
                 }
             }
-            if (won) return true;
+            remaining = Math.min(remaining, localRemaining);
         }
 
-        return false;
+        return remaining;
     }
     private static int indexToX(int index) {
         return index % 9;
@@ -108,6 +109,6 @@ public class BingoCardClassic extends BingoCard
         return getEffectiveX(x) + y == 4;
     }
 
-    private boolean hasFinished = false;
+    private int itemsToWin = 5;
     private final static int X_INIT = 2;
 }

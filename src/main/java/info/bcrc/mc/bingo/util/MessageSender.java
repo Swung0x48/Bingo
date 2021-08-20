@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.util;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.SoundCategory;
@@ -17,6 +18,10 @@ public class MessageSender {
         this.plugin = plugin;
         server = plugin.getServer();
         console = server.getConsoleSender();
+    }
+
+    public String getLocationString(Location location) {
+        return (Integer.toString((int) Math.floor(location.getX())) + " " + Integer.toString((int) Math.floor(location.getY())) + " " + Integer.toString((int) Math.floor(location.getZ())));
     }
 
     /**

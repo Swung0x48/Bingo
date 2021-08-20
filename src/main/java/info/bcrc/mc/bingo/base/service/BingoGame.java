@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -82,11 +84,13 @@ public abstract class BingoGame {
                     createBingoCardViewForPlayer(Bukkit.getPlayer(uuid), playerState.get(uuid).items));
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                initializePlayer(player);
-                player.teleport(plugin.getBingoRandomGenerator().getLocation(player.getWorld()));
+                initializePlayer(player, false);
+                
                 player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Bingo game started!");
             }
         });
+
+        plugin.getServer().getWorlds().forEach(world -> world.setTime(0));
 
         this.gameState = GameState.RUNNING;
     }
@@ -146,7 +150,7 @@ public abstract class BingoGame {
             view.openView();
     }
 
-    private void initializePlayer(Player player) {
+    public void initializePlayer(Player player, boolean fromRespawn) {
         for (PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
         }
@@ -167,7 +171,17 @@ public abstract class BingoGame {
 
         player.setGameMode(GameMode.SURVIVAL);
 
-        plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"text\": \"Click with the [\"}, {\"translate\": \""
-                + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR) + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
+        if (!fromRespawn) {
+            plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"text\": \"Click with the [\"}, {\"translate\": \""
+            + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR) + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
+
+            Server server = plugin.getServer();
+
+            Location randomLocation = plugin.getBingoRandomGenerator().getLocation(player.getWorld());
+            player.teleport(randomLocation);
+            server.dispatchCommand(server.getConsoleSender(), "spawnpoint " + player.getName() + " " + plugin.getMessageSender().getLocationString(randomLocation));
+
+            server.dispatchCommand(server.getConsoleSender(), "advancement revoke " + player.getName() + " everything");
+        }
     }
 }

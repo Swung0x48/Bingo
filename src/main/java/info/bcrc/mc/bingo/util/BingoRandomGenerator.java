@@ -49,7 +49,7 @@ public class BingoRandomGenerator {
         double x = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
         double z = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
 
-        return new Location(world, x, 192, z);
+        return new Location(world, x, world.getHighestBlockYAt((int) Math.floor(x), (int) Math.floor(z)) + 1, z);
     }
 
     public Location getLocation(World world) {

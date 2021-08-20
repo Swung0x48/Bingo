@@ -100,7 +100,8 @@ public class BingoListener implements Listener {
                 + plugin.getMessageSender().getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
         );
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.launch");
-//        plugin.getBingoScoreboard().increaseScore(player);
+        plugin.getBingoScoreboard().increaseFoundItems(player, itemsToWin);
+        plugin.getBingoScoreboard().setItemsToWin(player, itemsToWin);
     }
 
     @EventHandler

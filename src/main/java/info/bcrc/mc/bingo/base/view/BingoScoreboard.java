@@ -7,7 +7,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import info.bcrc.mc.bingo.Bingo;
 
@@ -20,13 +19,14 @@ public class BingoScoreboard {
     }
 
     public void init() {
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard board = manager.getMainScoreboard();
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         if ((bingoObjective = board.getObjective("bingo_scoreboard")) == null)
             bingoObjective = board.registerNewObjective("bingo_scoreboard", "dummy", ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Items Found");
         
-        for (Player player : plugin.getBingoGame().getPlayersInGame())
+        for (Player player : plugin.getBingoGame().getPlayersInGame()) {
             bingoObjective.getScore(player.getName()).setScore(0);
+            player.setScoreboard(board);
+        }
 
         bingoObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }

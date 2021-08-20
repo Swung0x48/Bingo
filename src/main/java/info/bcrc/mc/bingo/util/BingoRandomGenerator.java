@@ -46,17 +46,17 @@ public class BingoRandomGenerator {
     }
 
     public Location generateRandomLocation(World world) {
-        double x = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
-        double z = ThreadLocalRandom.current().nextDouble(minCoordinate, maxCoordinate);
+        int x = ThreadLocalRandom.current().nextInt(minCoordinate, maxCoordinate);
+        int z = ThreadLocalRandom.current().nextInt(minCoordinate, maxCoordinate);
 
-        return new Location(world, x, world.getHighestBlockYAt((int) Math.floor(x), (int) Math.floor(z)), z);
+        return new Location(world, x, world.getHighestBlockYAt(x, z), z);
     }
 
     public Location generateRandomNonLiquidLocation(World world) {
         Location location = generateRandomLocation(world);
 
         if (!world.getBlockAt(location).isLiquid())
-            return location.add(0, 1, 0);
+            return location.add(0.5, 1, 0.5);
         return generateRandomNonLiquidLocation(world);
     }
 
@@ -70,6 +70,6 @@ public class BingoRandomGenerator {
     private static ArrayList<Material> candidateItems;
     private ArrayList<ItemStack> selectedItems;
     private Location location;
-    private double minCoordinate;
-    private double maxCoordinate;
+    private int minCoordinate;
+    private int maxCoordinate;
 }

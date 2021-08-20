@@ -1,4 +1,4 @@
 # random range to spread players into
 coordinate-range:
-  max: 1000000.0
-  min: 10000.0
+  max: 500000
+  min: -500000

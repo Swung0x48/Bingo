@@ -31,29 +31,31 @@ public class BingoConfig {
 //            }
 //        }
 
-        minCoordinate = config.getDouble("coordinate-range.min");
-        maxCoordinate = config.getDouble("coordinate-range.max");
+        minCoordinate = config.getInt("coordinate-range.min");
+        maxCoordinate = config.getInt("coordinate-range.max");
 
         if (minCoordinate >= maxCoordinate) {
             plugin.getLogger().warning("Found maximum coordinate smaller than minimum. Swapping them.");
-            double tempCoordinate = minCoordinate;
+            int tempCoordinate = minCoordinate;
             minCoordinate = maxCoordinate;
             maxCoordinate = tempCoordinate;
 
             config.set("coordinate-range.min", minCoordinate);
             config.set("coordinate-range.max", maxCoordinate);
         }
+
+        config.options().copyDefaults(true);
     }
 
-    public double getMinCoordinate() {
+    public int getMinCoordinate() {
         return minCoordinate;
     };
 
-    public double getMaxCoordinate() {
+    public int getMaxCoordinate() {
         return maxCoordinate;
     };
 
 //    private final ArrayList<Material> candidateItems;
-    private double minCoordinate;
-    private double maxCoordinate;
+    private int minCoordinate;
+    private int maxCoordinate;
 }

@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
-import info.bcrc.mc.bingo.base.view.BingoCardView;
 import info.bcrc.mc.bingo.impl.classic.model.BingoCardClassic;
 
 import java.util.UUID;
@@ -40,10 +39,10 @@ public class BingoGameClassic extends BingoGame {
     @Override
     public boolean playerThrows(Player player, ItemStack item) {
         boolean finished = hasPlayerFinished(player);
-        int index = playerState.get(player.getUniqueId()).toggle(item);
+        int index = playerState.get(player.getUniqueId()).setFound(item);
         if (index != -1) {
             onFound(player, item);
-            playerView.get(player.getUniqueId()).toggle(index);
+            playerView.get(player.getUniqueId()).setFound(index);
             if (!finished && hasPlayerFinished(player)) {
                 onPlayerFinished(player);
             }

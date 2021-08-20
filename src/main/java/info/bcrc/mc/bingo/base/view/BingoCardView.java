@@ -23,7 +23,7 @@ public class BingoCardView
         return inventory;
     }
 
-    public void toggle(int index) {
+    public void setFound(int index) {
         if (index < 0 || index > inventory.getSize())
             throw new ArrayIndexOutOfBoundsException("Attempted to toggle an out of bound cell.");
 
@@ -34,14 +34,14 @@ public class BingoCardView
         }
         meta.setDisplayName(ChatColor.GREEN + "Achieved");
         item.setItemMeta(meta);
-        update(index, item);
+        updateInternal(index, item);
     }
 
-    public void toggle(ItemStack item) {
-        toggle(inventory.first(item));
+    public void setFound(ItemStack item) {
+        setFound(inventory.first(item));
     }
 
-    public void update(int index, ItemStack item) {
+    private void updateInternal(int index, ItemStack item) {
         inventory.setItem(index, item);
     }
 

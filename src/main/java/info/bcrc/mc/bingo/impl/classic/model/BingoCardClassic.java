@@ -13,13 +13,15 @@ public class BingoCardClassic extends BingoCard
     }
 
     @Override
-    public void toggle(int index) {
-        super.toggle(index);
+    public boolean setFound(int index) {
+        if (!super.setFound(index))
+            return false;
 
         if (!hasFinished && hasFinishedInternal(index)) {
             hasFinished = hasFinishedInternal(index);
             onFinished();
         }
+        return true;
     }
 
     @Override

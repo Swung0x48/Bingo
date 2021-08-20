@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class BingoListener implements Listener {
@@ -45,16 +46,11 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
-        Player player = (Player) event.getWhoClicked();
-
-        if (plugin.getBingoGame() == null || plugin.getBingoGame().isPlayerInGame(player))
-            return;
-
-        if (event.getCurrentItem() != null) {
-            if (event.getCurrentItem().getType().equals(Material.NETHER_STAR)
-                    || plugin.getBingoGame().cardViewBelongsToPlayer(event.getClickedInventory(), player)) {
+        try {
+            if (plugin.getBingoGame().isActiveBingoCardView(event.getClickedInventory()))
                 event.setCancelled(true);
-            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 

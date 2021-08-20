@@ -123,6 +123,15 @@ public abstract class BingoGame {
         return playerState.containsKey(player.getUniqueId());
     }
 
+    public boolean isActiveBingoCardView(Inventory inventory) {
+        for (Map.Entry<UUID, BingoCardView> entry: playerView.entrySet()) {
+            if (entry.getValue().getInventory() == inventory)
+                return true;
+        }
+
+        return false;
+    }
+
     public abstract boolean playerThrows(Player player, ItemStack item);
 
     public abstract void onFound(Player player, ItemStack item);

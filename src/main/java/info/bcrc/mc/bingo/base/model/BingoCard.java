@@ -1,6 +1,5 @@
 package info.bcrc.mc.bingo.base.model;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -25,14 +24,18 @@ public abstract class BingoCard
         Arrays.fill(checked, false);
     }
 
-    public void toggle(int index) {
-        checked[index] = !checked[index];
+    public boolean setFound(int index) {
+        if (checked[index])
+            return false;
+        checked[index] = true;
+        return true;
     }
 
-    public int toggle(ItemStack item) {
+    public int setFound(ItemStack item) {
         int index = Arrays.asList(items).indexOf(item);
         if (index != -1)
-            toggle(index);
+            if (!setFound(index))
+                return -1;
         return index;
     }
 

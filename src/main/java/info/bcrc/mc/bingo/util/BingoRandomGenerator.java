@@ -2,7 +2,6 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Location;

@@ -1,13 +1,13 @@
 package info.bcrc.mc.bingo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
-import java.util.Scanner;
 
-import info.bcrc.mc.bingo.util.BingoItemManager;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import info.bcrc.mc.bingo.base.service.BingoGame;
@@ -15,6 +15,7 @@ import info.bcrc.mc.bingo.base.view.BingoScoreboard;
 import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
 import info.bcrc.mc.bingo.controller.BingoListener;
 import info.bcrc.mc.bingo.util.BingoConfig;
+import info.bcrc.mc.bingo.util.BingoItemManager;
 import info.bcrc.mc.bingo.util.BingoRandomGenerator;
 import info.bcrc.mc.bingo.util.MessageSender;
 
@@ -38,7 +39,6 @@ public class Bingo extends JavaPlugin {
         return bingoItemManager;
     }
 
-
     public MessageSender getMessageSender() {
         return messageSender;
     }
@@ -46,7 +46,6 @@ public class Bingo extends JavaPlugin {
     public BingoRandomGenerator getBingoRandomGenerator() {
         return bingoRandomGenerator;
     }
-
 
     public BingoConfig getBingoConfig() {
         return bingoConfig;
@@ -63,7 +62,7 @@ public class Bingo extends JavaPlugin {
     public void onEnable() {
         messageSender = new MessageSender(this);
 
-//        saveDefaultConfig();
+        // saveDefaultConfig();
         reloadConfig();
         bingoConfig = new BingoConfig(this, this.getConfig());
         saveConfig();
@@ -71,8 +70,7 @@ public class Bingo extends JavaPlugin {
         File itemFile = new File(this.getDataFolder() + "/item.csv");
         InputStream stream = null;
 
-        try
-        {
+        try {
             if (itemFile.exists()) {
                 this.getLogger().info("Loading items from " + itemFile.getPath() + "...");
             } else {
@@ -90,13 +88,10 @@ public class Bingo extends JavaPlugin {
             }
             stream = new FileInputStream(itemFile);
 
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             this.getLogger().warning("An IO exception occurred when reading item list.");
             e.printStackTrace();
-        }
-        finally
-        {
+        } finally {
             if (stream == null) {
                 stream = this.getResource("item.csv");
             }

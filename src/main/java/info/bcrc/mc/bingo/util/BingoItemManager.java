@@ -1,14 +1,15 @@
 package info.bcrc.mc.bingo.util;
 
-import org.bukkit.Material;
-
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
-public class BingoItemManager
-{
+import org.bukkit.Material;
+
+public class BingoItemManager {
     public BingoItemManager(Logger logger) {
         candidateItems = new ArrayList<>();
         Collections.addAll(candidateItems, Material.values());
@@ -26,6 +27,7 @@ public class BingoItemManager
             }
         }
         logger.info(MessageFormat.format("Loaded {0} items.", candidateItems.size()));
+        scanner.close();
     }
 
     public ArrayList<Material> getCandidateItems() {

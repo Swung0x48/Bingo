@@ -44,26 +44,26 @@ public class BingoRandomGenerator {
         return selectedItems;
     }
 
-    public Location generateRandomLocation(World world) {
+    public Location getRandomLocation(World world) {
         int x = ThreadLocalRandom.current().nextInt(minCoordinate, maxCoordinate);
         int z = ThreadLocalRandom.current().nextInt(minCoordinate, maxCoordinate);
 
         return new Location(world, x, world.getHighestBlockYAt(x, z), z);
     }
 
-    public Location generateRandomNonLiquidLocation(World world) {
+    public void generateRandomNonLiquidLocation(World world) {
         for (int i = 0; i < 20; ++i) {
-            location = generateRandomLocation(world);
+            location = getRandomLocation(world);
 
             if (!world.getBlockAt(location).isLiquid())
-                return location.add(0.5, 1, 0.5);
+                break;
         }
-        return location.add(0.5, 1, 0.5);
+        location = location.add(0.5, 1, 0.5);
     }
 
     public Location getLocation(World world) {
         if (location == null)
-            return generateRandomNonLiquidLocation(world);
+            generateRandomNonLiquidLocation(world);
 
         return location;
     }

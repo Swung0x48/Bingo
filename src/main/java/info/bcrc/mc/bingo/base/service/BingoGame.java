@@ -169,12 +169,13 @@ public abstract class BingoGame {
 
         player.setGameMode(GameMode.SURVIVAL);
 
-        if (!fromRespawn) {
+        if (!fromRespawn && gameState == GameState.RUNNING) {
             plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"text\": \"Click with the [\"}, {\"translate\": \""
             + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR) + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
 
             Server server = plugin.getServer();
 
+            plugin.getBingoRandomGenerator().generateRandomNonLiquidLocation(player.getWorld());
             Location randomLocation = plugin.getBingoRandomGenerator().getLocation(player.getWorld());
             player.teleport(randomLocation);
             server.dispatchCommand(server.getConsoleSender(), "spawnpoint " + player.getName() + " " + plugin.getMessageSender().getLocationString(randomLocation));

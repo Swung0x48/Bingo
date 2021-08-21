@@ -72,7 +72,7 @@ public class BingoCardClassic extends BingoCard
             remaining = Math.min(remaining, localRemaining);
         }
 
-        return remaining;
+        return Math.min(remaining, itemsToWin);
     }
     private static int indexToX(int index) {
         return index % 9;

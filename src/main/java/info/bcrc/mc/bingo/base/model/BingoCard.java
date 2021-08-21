@@ -32,14 +32,21 @@ public abstract class BingoCard
     }
 
     public int setFound(ItemStack item) {
+        boolean finished = hasFinished();
         int index = Arrays.asList(items).indexOf(item);
         if (index != -1)
             if (!setFound(index))
                 return -1;
+
+        onFound(index);
+        if (!finished && hasFinished())
+            onFinished();
         return index;
     }
 
     public abstract boolean hasFinished();
+
+    public abstract void onFound(int index);
 
     public abstract void onFinished();
 }

@@ -2,3 +2,6 @@
 coordinate-range:
   max: 500000
   min: -500000
+
+# controls whether players get started in different or the same locations 
+different-location-per-player: false

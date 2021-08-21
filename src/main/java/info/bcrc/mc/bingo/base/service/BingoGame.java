@@ -180,7 +180,9 @@ public abstract class BingoGame {
 
             Server server = plugin.getServer();
 
-            plugin.getBingoRandomGenerator().generateRandomNonLiquidLocation(player.getWorld());
+            if (plugin.getBingoConfig().getDifferentLocationPerPlayer())
+                plugin.getBingoRandomGenerator().generateRandomNonLiquidLocation(player.getWorld());
+
             Location randomLocation = plugin.getBingoRandomGenerator().getLocation(player.getWorld());
             player.teleport(randomLocation);
             server.dispatchCommand(server.getConsoleSender(), "spawnpoint " + player.getName() + " " + plugin.getMessageSender().getLocationString(randomLocation));

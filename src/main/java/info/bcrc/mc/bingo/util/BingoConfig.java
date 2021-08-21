@@ -40,6 +40,8 @@ public class BingoConfig {
             config.set("coordinate-range.max", maxCoordinate);
         }
 
+        differentLocationPerPlayer = config.getBoolean("different-location-per-player");
+
         config.options().copyDefaults(true);
     }
 
@@ -51,7 +53,13 @@ public class BingoConfig {
         return maxCoordinate;
     };
 
+    public boolean getDifferentLocationPerPlayer() {
+        return differentLocationPerPlayer;
+    };
+
     // private final ArrayList<Material> candidateItems;
     private int minCoordinate;
     private int maxCoordinate;
+
+    private boolean differentLocationPerPlayer;
 }

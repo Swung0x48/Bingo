@@ -70,7 +70,7 @@ public abstract class BingoGame {
             playerState.put(player.getUniqueId(), null);
         if (!playerView.containsKey(player.getUniqueId()))
             playerView.put(player.getUniqueId(), null);
-        player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "You've joined the bingo game.");
+        plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.AQUA + player.getName() + ChatColor.RESET + " has joined the bingo game.");
     }
 
     public void start() {

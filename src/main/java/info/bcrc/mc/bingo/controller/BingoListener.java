@@ -97,7 +97,7 @@ public class BingoListener implements Listener {
         plugin.getMessageSender().broadcastRawBingoMessage(
             "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
                 + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
-                + plugin.getMessageSender().getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] !\"}]}"
+                + plugin.getMessageSender().getItemTranslationKey(item.getType()) + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"" + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"]!\"}]}"
         );
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.launch");
         plugin.getBingoScoreboard().increaseFoundItems(player, itemsToWin);
@@ -108,7 +108,7 @@ public class BingoListener implements Listener {
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
         plugin.getMessageSender().broadcastBingoMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
-        plugin.getMessageSender().broadcastBingoTitle(" ", ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
+        plugin.getMessageSender().broadcastBingoTitle("Bingo!", ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.twinkle_far");
     }
 }

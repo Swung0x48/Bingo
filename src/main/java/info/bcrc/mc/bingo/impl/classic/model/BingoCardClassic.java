@@ -13,20 +13,13 @@ public class BingoCardClassic extends BingoCard
     }
 
     @Override
-    public boolean setFound(int index) {
-        if (!super.setFound(index))
-            return false;
-
-        if (!hasFinished() && itemsToWinInternal(index) == 0) {
-            itemsToWin = itemsToWinInternal(index);
-            onFinished();
-        }
-        return true;
+    public boolean hasFinished() {
+        return itemsToWin == 0;
     }
 
     @Override
-    public boolean hasFinished() {
-        return itemsToWin == 0;
+    public void onFound(int index) {
+        itemsToWin = itemsToWinInternal(index);
     }
 
     public int getItemsToWin() {
@@ -34,8 +27,8 @@ public class BingoCardClassic extends BingoCard
     }
 
     @Override
-    public void onFinished()
-    {
+    public void onFinished() {
+
     }
 
     private int itemsToWinInternal(int index) {

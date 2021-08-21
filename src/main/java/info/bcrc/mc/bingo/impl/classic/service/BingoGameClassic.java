@@ -44,7 +44,7 @@ public class BingoGameClassic extends BingoGame {
         int index = bingoCard.setFound(item);
         if (index != -1) {
             onFound(player, item, bingoCard.getItemsToWin());
-            bingoCard.setFound(index);
+            playerView.get(player.getUniqueId()).setFound(index);
             if (!finished && hasPlayerFinished(player)) {
                 onPlayerFinished(player);
             }

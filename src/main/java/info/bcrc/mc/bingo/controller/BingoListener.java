@@ -28,22 +28,18 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        if (plugin.getBingoGame().getGameState() != GameState.RUNNING)
-            return;
-
         plugin.getBingoGame().initializePlayer(event.getPlayer(), true);
     }
 
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent event) {
-        if (plugin.getBingoGame() == null
-                || plugin.getBingoGame().getGameState() != GameState.RUNNING)
+        if (plugin.getBingoGame() == null)
             return;
 
         ItemStack item = event.getItem();
         Player player = event.getPlayer();
 
-        if (item != null
+        if (item != null && plugin.getBingoGame().getGameState() == GameState.RUNNING
                 && item.getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
             plugin.getBingoGame().openBingoCard(player);
@@ -52,9 +48,6 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
-        if (plugin.getBingoGame().getGameState() != GameState.RUNNING)
-            return;
-
         try {
             if (plugin.getBingoGame().isActiveBingoCardView(event.getClickedInventory()))
                 event.setCancelled(true);
@@ -65,18 +58,12 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onInventoryPickupItemEvent(InventoryPickupItemEvent event) {
-        if (plugin.getBingoGame().getGameState() != GameState.RUNNING)
-            return;
-
         if (event.getItem().getItemStack().getType().equals(Material.NETHER_STAR))
             event.setCancelled(true);
     }
 
     @EventHandler
     public void onPlayerSwapHandItems(PlayerSwapHandItemsEvent event) {
-        if (plugin.getBingoGame().getGameState() != GameState.RUNNING)
-            return;
-
         if (event.getOffHandItem().getType().equals(Material.NETHER_STAR)) {
             event.setCancelled(true);
         }
@@ -84,9 +71,6 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
-        if (plugin.getBingoGame().getGameState() != GameState.RUNNING)
-            return;
-
         ItemStack item = event.getItemDrop().getItemStack();
 
         if (item.getType().equals(Material.NETHER_STAR)) {

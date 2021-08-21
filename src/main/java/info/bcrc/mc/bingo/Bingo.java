@@ -51,6 +51,10 @@ public class Bingo extends JavaPlugin {
         return bingoConfig;
     }
 
+    public BingoListener getBingoListener() {
+        return bingoListener;
+    }
+
     public BingoScoreboard getBingoScoreboard() {
         return bingoScoreboard;
     }
@@ -102,7 +106,6 @@ public class Bingo extends JavaPlugin {
         bingoListener = new BingoListener(this);
         bingoScoreboard = new BingoScoreboard(this);
         bingoRandomGenerator = new BingoRandomGenerator(getBingoConfig(), getBingoItemManager());
-        this.getServer().getPluginManager().registerEvents(bingoListener, this);
 
         Objects.requireNonNull(getCommand("bingo")).setExecutor(bingoCommandExecutor);
 

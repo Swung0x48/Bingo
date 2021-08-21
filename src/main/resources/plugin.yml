@@ -6,6 +6,6 @@ api-version: 1.17
 commands:
   bingo:
     description: controls Bingo actions
-    usage: /bingo <setup|join|start|exitworld>
+    usage: /bingo <setup|join|start|exitworld|stop>
     permission: bingo.permission
     permission-message: You don't have the permission to run this command!

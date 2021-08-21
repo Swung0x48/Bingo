@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
+import info.bcrc.mc.bingo.base.service.BingoGame.GameState;
 import info.bcrc.mc.bingo.impl.classic.service.BingoGameClassic;
 
 public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
@@ -51,12 +52,20 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                 case "start":
                     if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
                         sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: The bingo has not been set up");
-
-                    plugin.bingoGame.start();
+                    else
+                        plugin.bingoGame.start();
 
                     return true;
                 case "status":
                     plugin.getLogger().info(plugin.bingoGame.getGameState().name());
+                    return true;
+                case "stop":
+                    if (plugin.bingoGame.getGameState() != GameState.UNINITIALIZED) {
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Stopped the current running bingo.");
+                        plugin.bingoGame.stop();
+                    }
+                    else
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game is running currently.");
                     return true;
             }
         }
@@ -67,7 +76,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("bingo")) {
             if (args.length <= 1) {
-                return Arrays.asList("setup", "join", "start", "status");
+                return Arrays.asList("setup", "join", "start", "status", "stop");
             }
         }
         return null;

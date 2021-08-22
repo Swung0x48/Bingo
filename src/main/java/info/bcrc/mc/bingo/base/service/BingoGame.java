@@ -3,6 +3,7 @@ package info.bcrc.mc.bingo.base.service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import info.bcrc.mc.bingo.base.event.BingoPlayerQuitEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -151,6 +152,20 @@ public abstract class BingoGame {
         BingoCardView view = playerView.get(player.getUniqueId());
         if (view != null)
             view.openView();
+    }
+
+    public boolean playerQuit(Player player) {
+        if (!isPlayerInGame(player))
+            return false;
+        try {
+            playerState.remove(player.getUniqueId());
+            playerView.remove(player.getUniqueId());
+        } catch (NullPointerException e) {
+            plugin.getLogger().warning("Exception when playerQuit");
+            e.printStackTrace();
+        }
+        Bukkit.getPluginManager().callEvent(new BingoPlayerQuitEvent(player));
+        return true;
     }
 
     public void initializePlayer(Player player, boolean fromRespawn) {

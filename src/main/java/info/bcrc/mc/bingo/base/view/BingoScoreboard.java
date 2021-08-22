@@ -60,4 +60,9 @@ public class BingoScoreboard {
     public void setItemsToWin(Player player, int itemsToWin) {
         itemsToWinObjective.getScore(player.getName()).setScore(itemsToWin);
     }
+
+    public void removePlayer(Player player) {
+        bingoObjective.getScoreboard().resetScores(player.getName() + " (" + Integer.toString(itemsToWinObjective.getScore(player.getName()).getScore()) + " to win)");
+        itemsToWinObjective.getScoreboard().resetScores(player.getName());
+    }
 }

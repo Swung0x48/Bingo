@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.event.BingoFinishedEvent;
+import info.bcrc.mc.bingo.base.event.BingoPlayerQuitEvent;
 import info.bcrc.mc.bingo.base.service.BingoGame.GameState;
 import info.bcrc.mc.bingo.impl.classic.event.BingoFoundClassicEvent;
 
@@ -24,6 +26,14 @@ public class BingoListener implements Listener {
 
     public BingoListener(Bingo plugin) {
         this.plugin = plugin;
+    }
+
+    public void register() {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    public void unregister() {
+        HandlerList.unregisterAll(this);
     }
 
     @EventHandler
@@ -107,5 +117,12 @@ public class BingoListener implements Listener {
         plugin.getMessageSender().broadcastBingoTitle("Bingo!",
                 ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.twinkle_far");
+    }
+
+    @EventHandler
+    public void onPlayerQuitBingo(BingoPlayerQuitEvent e) {
+        Player player = e.getPlayer();
+        plugin.getBingoScoreboard().removePlayer(player);
+        plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.AQUA + player.getName() + ChatColor.RESET + " has quitted the bingo game.");
     }
 }

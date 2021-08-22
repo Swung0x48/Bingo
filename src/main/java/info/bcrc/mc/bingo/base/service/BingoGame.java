@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -94,13 +93,13 @@ public abstract class BingoGame {
 
         plugin.getServer().getWorlds().forEach(world -> world.setTime(0));
         
-        plugin.getServer().getPluginManager().registerEvents(plugin.getBingoListener(), plugin);
+        plugin.getBingoListener().register();
 
         this.gameState = GameState.RUNNING;
     }
 
     public void stop() {
-        HandlerList.unregisterAll(plugin.getBingoListener());
+        plugin.getBingoListener().unregister();
 
         this.gameState = GameState.UNINITIALIZED;
     }

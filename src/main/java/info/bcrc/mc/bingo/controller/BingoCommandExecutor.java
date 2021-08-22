@@ -23,6 +23,15 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
         this.plugin = plugin;
     }
 
+    private boolean isPlayer(CommandSender sender) {
+        if (sender instanceof Player)
+            return true;
+        else {
+            sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "This command can only be issued by player.");
+            return false;
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("bingo") && args.length > 0) {
@@ -33,21 +42,16 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     plugin.bingoGame.setup();
                     return true;
                 case "join":
-                    Player p = null;
-                    if (sender instanceof Player)
-                        p = (Player) sender;
-                    if (p == null) {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "This command can only be issued by player.");
+                    if (!isPlayer(sender))
                         return true;
-                    }
 
                     if (plugin.getBingoGame() == null) {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "No bingo game has been set up.");
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game has been set up.");
                         sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Use /bingo setup to set one up.");
                         return true;
                     }
 
-                    plugin.bingoGame.join(p);
+                    plugin.bingoGame.join((Player) sender);
                     return true;
                 case "start":
                     if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
@@ -67,6 +71,22 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     else
                         sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game is running currently.");
                     return true;
+                case "quit":
+                    if (!isPlayer(sender))
+                        return true;
+                    
+                    if (plugin.bingoGame == null || plugin.bingoGame.getGameState() == GameState.UNINITIALIZED) {
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game has been set up.");
+                        return true;
+                    }
+                    
+                    if (args.length > 1 && args[1].equalsIgnoreCase("confirm"))
+                        plugin.bingoGame.playerQuit((Player) sender);
+                    else {
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Are you sure to quit this game?");
+                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Type " + ChatColor.GREEN + "/bingo quit confirm" + ChatColor.RESET + " to quit it.");
+                    }
+                    return true;
             }
         }
         return false;
@@ -75,9 +95,10 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("bingo")) {
-            if (args.length <= 1) {
-                return Arrays.asList("setup", "join", "start", "status", "stop");
-            }
+            if (args.length <= 1)
+                return Arrays.asList("setup", "join", "quit", "start", "status", "stop");
+            if (args.length > 1 && args[0].equalsIgnoreCase("quit"))
+                return Arrays.asList("confirm");
         }
         return null;
     }

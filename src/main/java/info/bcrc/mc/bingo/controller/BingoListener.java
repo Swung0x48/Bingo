@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.controller;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +41,9 @@ public class BingoListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        plugin.getBingoGame().initializePlayer(event.getPlayer(), true);
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            plugin.getBingoGame().initializePlayer(event.getPlayer(), true);
+        });
     }
 
     @EventHandler
@@ -99,12 +103,12 @@ public class BingoListener implements Listener {
         Player player = e.getPlayer();
         ItemStack item = e.getItem();
         int itemsToWin = e.getItemsToWin();
-        plugin.getMessageSender().broadcastRawBingoMessage(
-                "{\"text\": \"\", \"extra\": [" + MessageSender.bingoJsonPrefix + ", {\"selector\": \""
-                        + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
-                        + plugin.getMessageSender().getItemTranslationKey(item.getType())
-                        + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\""
-                        + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"]!\"}]}");
+        plugin.getMessageSender().broadcastRawBingoMessage("{\"text\": \"\", \"extra\": ["
+                + MessageSender.bingoJsonPrefix + ", {\"selector\": \"" + player.getName()
+                + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
+                + plugin.getMessageSender().getItemTranslationKey(item.getType())
+                + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\""
+                + item.getType().getKey().getKey() + "\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"]!\"}]}");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.launch");
         plugin.getBingoScoreboard().increaseFoundItems(player, itemsToWin);
         plugin.getBingoScoreboard().setItemsToWin(player, itemsToWin);
@@ -113,8 +117,8 @@ public class BingoListener implements Listener {
     @EventHandler
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
-        plugin.getMessageSender().broadcastBingoMessage(
-                MessageSender.bingoPrefix + player.getName() + " has finished the Bingo!");
+        plugin.getMessageSender()
+                .broadcastBingoMessage(MessageSender.bingoPrefix + player.getName() + " has finished the Bingo!");
         plugin.getMessageSender().broadcastBingoTitle("Bingo!",
                 ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.twinkle_far");
@@ -124,6 +128,12 @@ public class BingoListener implements Listener {
     public void onPlayerQuitBingo(BingoPlayerQuitEvent e) {
         Player player = e.getPlayer();
         plugin.getBingoScoreboard().removePlayer(player);
-        plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.AQUA + player.getName() + ChatColor.RESET + " has quitted the bingo game.");
+        plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.AQUA + player.getName()
+                + ChatColor.RESET + " has quitted the bingo game.");
+    }
+
+    @EventHandler
+    public void onPlayerJoinServer(PlayerJoinEvent e) {
+        plugin.getBingoScoreboard().resetPlayerScoreboard(e.getPlayer());
     }
 }

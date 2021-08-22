@@ -25,8 +25,7 @@ public class BingoFoundEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers()
-    {
+    public HandlerList getHandlers() {
         return HANDLERS;
     }
 

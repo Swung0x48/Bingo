@@ -25,12 +25,14 @@ public class BingoScoreboard {
     public void init() {
         if ((bingoObjective = scoreboard.getObjective("bingo_scoreboard")) != null)
             bingoObjective.unregister();
-        bingoObjective = scoreboard.registerNewObjective("bingo_scoreboard", "dummy", MessageSender.bingoPrefix + "Items Found");
+        bingoObjective = scoreboard.registerNewObjective("bingo_scoreboard", "dummy",
+                MessageSender.bingoPrefix + "Items Found");
 
         if ((itemsToWinObjective = scoreboard.getObjective("items_to_win")) != null)
             itemsToWinObjective.unregister();
-        itemsToWinObjective = scoreboard.registerNewObjective("items_to_win", "dummy", MessageSender.bingoPrefix + "Items to Win");
-        
+        itemsToWinObjective = scoreboard.registerNewObjective("items_to_win", "dummy",
+                MessageSender.bingoPrefix + "Items to Win");
+
         for (Player player : plugin.getBingoGame().getPlayersInGame()) {
             bingoObjective.getScore(player.getName() + " (5 to win)").setScore(0);
             itemsToWinObjective.getScore(player.getName()).setScore(5);
@@ -49,7 +51,8 @@ public class BingoScoreboard {
     public void increaseFoundItems(Player player, int itemsToWin) {
         plugin.getLogger().info(player.getName() + ": " + Integer.toString(itemsToWin) + " to win");
 
-        String oldName = player.getName() + " (" + Integer.toString(itemsToWinObjective.getScore(player.getName()).getScore()) + " to win)";
+        String oldName = player.getName() + " ("
+                + Integer.toString(itemsToWinObjective.getScore(player.getName()).getScore()) + " to win)";
         Score score = bingoObjective.getScore(oldName);
         score.setScore(score.getScore() + 1);
         if (itemsToWin == 0)
@@ -63,7 +66,12 @@ public class BingoScoreboard {
     }
 
     public void removePlayer(Player player) {
-        bingoObjective.getScoreboard().resetScores(player.getName() + " (" + Integer.toString(itemsToWinObjective.getScore(player.getName()).getScore()) + " to win)");
+        bingoObjective.getScoreboard().resetScores(player.getName() + " ("
+                + Integer.toString(itemsToWinObjective.getScore(player.getName()).getScore()) + " to win)");
         itemsToWinObjective.getScoreboard().resetScores(player.getName());
+    }
+
+    public void resetPlayerScoreboard(Player player) {
+        player.setScoreboard(scoreboard);
     }
 }

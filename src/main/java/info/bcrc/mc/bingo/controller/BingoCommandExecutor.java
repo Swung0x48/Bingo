@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,6 +31,39 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
         else {
             sender.sendMessage(MessageSender.bingoPrefix + "This command can only be issued by player.");
             return false;
+        }
+    }
+
+    private void bingoUp(Player player) {
+        Location currentLocation = player.getLocation();
+        double x = Math.floor(currentLocation.getX());
+        double y = Math.floor(currentLocation.getY());
+        double z = Math.floor(currentLocation.getZ());
+
+        int highestY = player.getWorld().getHighestBlockYAt((int) x, (int) z);
+        int maxY = player.getWorld().getMaxHeight();
+
+        if (y < 80) {
+            if (highestY < 120) {
+                player.getWorld().getBlockAt((int) x, 120, (int) z).setType(Material.DIRT);
+                player.teleport(new Location(player.getWorld(), x + 0.5, 121, z + 0.5));
+            }
+            else
+                player.teleport(new Location(player.getWorld(), x + 0.5, highestY + 1, z + 0.5));
+        }
+        else if (y >= 80 && y < maxY - 40) {
+            if (highestY < y + 40) {
+                player.getWorld().getBlockAt((int) x, (int) y + 40, (int) z).setType(Material.DIRT);
+                player.teleport(new Location(player.getWorld(), x + 0.5, y + 41, z + 0.5));
+            }
+            else
+                player.teleport(new Location(player.getWorld(), x + 0.5, highestY + 1, z + 0.5));
+        }
+        else {
+            if (highestY != maxY)
+                player.getWorld().getBlockAt((int) x, maxY - 1, (int) z).setType(Material.DIRT);
+            
+            player.teleport(new Location(player.getWorld(), x + 0.5, maxY, z + 0.5));
         }
     }
 
@@ -79,12 +114,12 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                 case "quit":
                     if (!isPlayer(sender))
                         return true;
-                    
+
                     if (plugin.bingoGame == null || plugin.bingoGame.getGameState() == GameState.UNINITIALIZED) {
                         sender.sendMessage(MessageSender.bingoErrorPrefix + "No bingo game has been set up.");
                         return true;
                     }
-                    
+
                     if (args.length > 1 && args[1].equalsIgnoreCase("confirm"))
                         plugin.bingoGame.playerQuit((Player) sender);
                     else {
@@ -95,11 +130,17 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                 case "viewcard":
                     if (!isPlayer(sender))
                         return true;
-                    
+
                     if (plugin.bingoGame.getGameState() == GameState.RUNNING)
                         plugin.getBingoGame().openBingoCard((Player) sender);
                     else
                         sender.sendMessage(MessageSender.bingoErrorPrefix + "You can only view the card during a running bingo game!");
+                    return true;
+                case "up":
+                    if (!isPlayer(sender))
+                        return true;
+
+                    bingoUp((Player) sender);
                     return true;
             }
         }
@@ -110,7 +151,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (command.getName().equalsIgnoreCase("bingo")) {
             if (args.length <= 1)
-                return Arrays.asList("setup", "join", "quit", "start", "status", "viewcard", "stop");
+                return Arrays.asList("setup", "join", "quit", "start", "status", "viewcard", "up", "stop");
             if (args.length > 1 && args[0].equalsIgnoreCase("quit"))
                 return Arrays.asList("confirm");
         }

@@ -20,6 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.model.BingoCard;
 import info.bcrc.mc.bingo.base.view.BingoCardView;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public abstract class BingoGame {
     public enum GameState {
@@ -43,10 +44,10 @@ public abstract class BingoGame {
     }
 
     public void setup() {
-        plugin.getLogger().info(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Setting up Bingo game...");
+        plugin.getLogger().info(MessageSender.bingoPrefix + "Setting up Bingo game...");
 
         if (gameState != GameState.FINISHED && gameState != GameState.UNINITIALIZED) {
-            plugin.getLogger().info(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Game is already running.");
+            plugin.getLogger().info(MessageSender.bingoPrefix + "Game is already running.");
             return;
         }
 
@@ -62,8 +63,8 @@ public abstract class BingoGame {
         }
         this.gameState = GameState.SETUP;
 
-        plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "A bingo game has been set up.");
-        plugin.getMessageSender().broadcastRawMessage("{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"text\": \"Type \"}, {\"text\": \"/bingo join\", \"color\": \"green\"}, {\"text\": \" or \"}, {\"text\": \"click here to join it directly\", \"underlined\": \"true\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/bingo join\"}, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"click here to join it directly\"}}]}");
+        plugin.getMessageSender().broadcastMessage(MessageSender.bingoPrefix + "A bingo game has been set up.");
+        plugin.getMessageSender().broadcastRawMessage("{\"text\": \"\", \"extra\": [" + MessageSender.bingoJsonPrefix + ", {\"text\": \"Type \"}, {\"text\": \"/bingo join\", \"color\": \"green\"}, {\"text\": \" or \"}, {\"text\": \"click here to join it directly\", \"underlined\": \"true\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/bingo join\"}, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"click here to join it directly\"}}]}");
     }
 
     public void join(Player player) {
@@ -75,7 +76,7 @@ public abstract class BingoGame {
     }
 
     public void start() {
-        plugin.getLogger().info(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Starting Bingo game...");
+        plugin.getLogger().info(MessageSender.bingoPrefix + "Starting Bingo game...");
         plugin.getBingoScoreboard().init();
 
         playerState.forEach((uuid, _unused) ->
@@ -87,7 +88,7 @@ public abstract class BingoGame {
             if (player != null) {
                 initializePlayer(player, false);
                 
-                player.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Bingo game started!");
+                player.sendMessage(MessageSender.bingoPrefix + "Bingo game started!");
             }
         });
 
@@ -189,7 +190,7 @@ public abstract class BingoGame {
         player.setGameMode(GameMode.SURVIVAL);
 
         if (!fromRespawn) {
-            plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"text\": \"Click with the [\"}, {\"translate\": \""
+            plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": [" + MessageSender.bingoJsonPrefix + ", {\"text\": \"Click with the [\"}, {\"translate\": \""
             + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR) + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
 
             Server server = plugin.getServer();

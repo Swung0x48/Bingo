@@ -1,5 +1,6 @@
 package info.bcrc.mc.bingo.util;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -13,6 +14,10 @@ public class MessageSender {
     Bingo plugin;
     Server server;
     ConsoleCommandSender console;
+
+    public static String bingoPrefix = ChatColor.GOLD + "[Bingo] " + ChatColor.RESET;
+    public static String bingoErrorPrefix = ChatColor.GOLD + "[Bingo] " + ChatColor.RED + "Error: " + ChatColor.RESET;
+    public static String bingoJsonPrefix = "{\"text\": \"[Bingo] \", \"color\": \"gold\"}";
 
     public MessageSender(Bingo plugin) {
         this.plugin = plugin;

@@ -14,6 +14,7 @@ import info.bcrc.mc.bingo.Bingo;
 import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.base.service.BingoGame.GameState;
 import info.bcrc.mc.bingo.impl.classic.service.BingoGameClassic;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
 
@@ -27,7 +28,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
         if (sender instanceof Player)
             return true;
         else {
-            sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "This command can only be issued by player.");
+            sender.sendMessage(MessageSender.bingoPrefix + "This command can only be issued by player.");
             return false;
         }
     }
@@ -46,8 +47,8 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                         return true;
 
                     if (plugin.getBingoGame() == null) {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game has been set up.");
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Use /bingo setup to set one up.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Error: No bingo game has been set up.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Use /bingo setup to set one up.");
                         return true;
                     }
 
@@ -55,7 +56,7 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     return true;
                 case "start":
                     if (plugin.bingoGame.getGameState() != BingoGame.GameState.SETUP)
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: The bingo has not been set up");
+                        sender.sendMessage(MessageSender.bingoErrorPrefix + "The bingo has not been set up");
                     else
                         plugin.bingoGame.start();
 
@@ -65,26 +66,26 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
                     return true;
                 case "stop":
                     if (plugin.bingoGame.getGameState() != GameState.UNINITIALIZED) {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Stopped the current running bingo.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Stopped the current running bingo.");
                         plugin.bingoGame.stop();
                     }
                     else
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game is running currently.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Error: No bingo game is running currently.");
                     return true;
                 case "quit":
                     if (!isPlayer(sender))
                         return true;
                     
                     if (plugin.bingoGame == null || plugin.bingoGame.getGameState() == GameState.UNINITIALIZED) {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Error: No bingo game has been set up.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Error: No bingo game has been set up.");
                         return true;
                     }
                     
                     if (args.length > 1 && args[1].equalsIgnoreCase("confirm"))
                         plugin.bingoGame.playerQuit((Player) sender);
                     else {
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Are you sure to quit this game?");
-                        sender.sendMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Type " + ChatColor.GREEN + "/bingo quit confirm" + ChatColor.RESET + " to quit it.");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Are you sure to quit this game?");
+                        sender.sendMessage(MessageSender.bingoPrefix + "Type " + ChatColor.GREEN + "/bingo quit confirm" + ChatColor.RESET + " to quit it.");
                     }
                     return true;
             }

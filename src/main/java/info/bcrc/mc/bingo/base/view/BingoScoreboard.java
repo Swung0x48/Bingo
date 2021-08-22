@@ -9,6 +9,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
 import info.bcrc.mc.bingo.Bingo;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public class BingoScoreboard {
     private Bingo plugin;
@@ -24,11 +25,11 @@ public class BingoScoreboard {
     public void init() {
         if ((bingoObjective = scoreboard.getObjective("bingo_scoreboard")) != null)
             bingoObjective.unregister();
-        bingoObjective = scoreboard.registerNewObjective("bingo_scoreboard", "dummy", ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Items Found");
+        bingoObjective = scoreboard.registerNewObjective("bingo_scoreboard", "dummy", MessageSender.bingoPrefix + "Items Found");
 
         if ((itemsToWinObjective = scoreboard.getObjective("items_to_win")) != null)
             itemsToWinObjective.unregister();
-        itemsToWinObjective = scoreboard.registerNewObjective("items_to_win", "dummy", ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + "Items to Win");
+        itemsToWinObjective = scoreboard.registerNewObjective("items_to_win", "dummy", MessageSender.bingoPrefix + "Items to Win");
         
         for (Player player : plugin.getBingoGame().getPlayersInGame()) {
             bingoObjective.getScore(player.getName() + " (5 to win)").setScore(0);

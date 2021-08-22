@@ -19,6 +19,7 @@ import info.bcrc.mc.bingo.base.event.BingoFinishedEvent;
 import info.bcrc.mc.bingo.base.event.BingoPlayerQuitEvent;
 import info.bcrc.mc.bingo.base.service.BingoGame.GameState;
 import info.bcrc.mc.bingo.impl.classic.event.BingoFoundClassicEvent;
+import info.bcrc.mc.bingo.util.MessageSender;
 
 public class BingoListener implements Listener {
 
@@ -99,7 +100,7 @@ public class BingoListener implements Listener {
         ItemStack item = e.getItem();
         int itemsToWin = e.getItemsToWin();
         plugin.getMessageSender().broadcastRawBingoMessage(
-                "{\"text\": \"\", \"extra\": [{\"text\": \"[Bingo] \", \"color\": \"gold\"}, {\"selector\": \""
+                "{\"text\": \"\", \"extra\": [" + MessageSender.bingoJsonPrefix + ", {\"selector\": \""
                         + player.getName() + "\"}, {\"text\": \" found [\"}, {\"translate\": \""
                         + plugin.getMessageSender().getItemTranslationKey(item.getType())
                         + "\", \"color\": \"green\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\""
@@ -113,7 +114,7 @@ public class BingoListener implements Listener {
     public void onPlayerFinished(BingoFinishedEvent e) {
         Player player = e.getPlayer();
         plugin.getMessageSender().broadcastBingoMessage(
-                ChatColor.GOLD + "[Bingo] " + ChatColor.RESET + player.getName() + " has finished the Bingo!");
+                MessageSender.bingoPrefix + player.getName() + " has finished the Bingo!");
         plugin.getMessageSender().broadcastBingoTitle("Bingo!",
                 ChatColor.GOLD + player.getName() + ChatColor.AQUA + " has finished the Bingo!");
         plugin.getMessageSender().playBingoSound(player, "entity.firework_rocket.twinkle_far");

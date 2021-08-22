@@ -198,11 +198,6 @@ public abstract class BingoGame {
         player.setGameMode(GameMode.SURVIVAL);
 
         if (!fromRespawn) {
-            plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": ["
-                    + MessageSender.bingoJsonPrefix + ", {\"text\": \"Click with the [\"}, {\"translate\": \""
-                    + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR)
-                    + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
-
             Server server = plugin.getServer();
 
             if (plugin.getBingoConfig().getDifferentLocationPerPlayer())
@@ -214,6 +209,11 @@ public abstract class BingoGame {
                     + plugin.getMessageSender().getLocationString(randomLocation));
 
             server.dispatchCommand(server.getConsoleSender(), "advancement revoke " + player.getName() + " everything");
+            
+            plugin.getMessageSender().sendRawMessage(player, "{\"text\": \"\", \"extra\": ["
+                    + MessageSender.bingoJsonPrefix + ", {\"text\": \"Click with the [\"}, {\"translate\": \""
+                    + plugin.getMessageSender().getItemTranslationKey(Material.NETHER_STAR)
+                    + "\", \"color\": \"yellow\", \"hoverEvent\": {\"action\": \"show_item\", \"value\": \"{\\\"id\\\": \\\"nether_star\\\", \\\"Count\\\": 1}\"}}, {\"text\": \"] to check the bingo map\"}]}");
         }
     }
 }

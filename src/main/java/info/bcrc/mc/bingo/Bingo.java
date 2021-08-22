@@ -14,6 +14,7 @@ import info.bcrc.mc.bingo.base.service.BingoGame;
 import info.bcrc.mc.bingo.base.view.BingoScoreboard;
 import info.bcrc.mc.bingo.controller.BingoCommandExecutor;
 import info.bcrc.mc.bingo.controller.BingoListener;
+import info.bcrc.mc.bingo.controller.BingoPreGameListener;
 import info.bcrc.mc.bingo.util.BingoConfig;
 import info.bcrc.mc.bingo.util.BingoItemManager;
 import info.bcrc.mc.bingo.util.BingoRandomGenerator;
@@ -30,6 +31,7 @@ public class Bingo extends JavaPlugin {
     private BingoConfig bingoConfig;
     private BingoCommandExecutor bingoCommandExecutor;
     private BingoListener bingoListener;
+    private BingoPreGameListener bingoPreGameListener;
     private MessageSender messageSender;
     private BingoRandomGenerator bingoRandomGenerator;
     private BingoItemManager bingoItemManager;
@@ -53,6 +55,10 @@ public class Bingo extends JavaPlugin {
 
     public BingoListener getBingoListener() {
         return bingoListener;
+    }
+
+    public BingoPreGameListener getBingoPreGameListener() {
+        return bingoPreGameListener;
     }
 
     public BingoScoreboard getBingoScoreboard() {
@@ -104,6 +110,7 @@ public class Bingo extends JavaPlugin {
         bingoItemManager = new BingoItemManager(stream, this.getLogger());
         bingoCommandExecutor = new BingoCommandExecutor(this);
         bingoListener = new BingoListener(this);
+        bingoPreGameListener = new BingoPreGameListener(this);
         bingoScoreboard = new BingoScoreboard(this);
         bingoRandomGenerator = new BingoRandomGenerator(getBingoConfig(), getBingoItemManager());
 

@@ -51,6 +51,8 @@ public abstract class BingoGame {
             return;
         }
 
+        plugin.getBingoPreGameListener().register();
+
         ArrayList<ItemStack> list = plugin.getBingoRandomGenerator().generateNewList();
         plugin.getLogger().info("Item generated: ");
         StringBuilder sb = new StringBuilder();
@@ -72,6 +74,8 @@ public abstract class BingoGame {
             playerState.put(player.getUniqueId(), null);
         if (!playerView.containsKey(player.getUniqueId()))
             playerView.put(player.getUniqueId(), null);
+
+        initializePlayer(player, false);
         plugin.getMessageSender().broadcastMessage(ChatColor.GOLD + "[Bingo] " + ChatColor.AQUA + player.getName() + ChatColor.RESET + " has joined the bingo game.");
     }
 
@@ -86,14 +90,13 @@ public abstract class BingoGame {
                     createBingoCardViewForPlayer(Bukkit.getPlayer(uuid), playerState.get(uuid).items));
             Player player = Bukkit.getPlayer(uuid);
             if (player != null) {
-                initializePlayer(player, false);
-                
                 player.sendMessage(MessageSender.bingoPrefix + "Bingo game started!");
             }
         });
 
         plugin.getServer().getWorlds().forEach(world -> world.setTime(0));
         
+        plugin.getBingoPreGameListener().unregister();
         plugin.getBingoListener().register();
 
         this.gameState = GameState.RUNNING;

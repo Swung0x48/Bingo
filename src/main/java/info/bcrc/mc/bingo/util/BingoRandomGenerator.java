@@ -68,6 +68,10 @@ public class BingoRandomGenerator {
         return location;
     }
 
+    public void clearLocationCache() {
+        location = null;
+    }
+
     private static ArrayList<Material> candidateItems;
     private ArrayList<ItemStack> selectedItems;
     private Location location;

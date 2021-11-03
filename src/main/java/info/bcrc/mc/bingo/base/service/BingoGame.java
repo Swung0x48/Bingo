@@ -110,6 +110,8 @@ public abstract class BingoGame {
     public void stop() {
         plugin.getBingoListener().unregister();
 
+        plugin.getBingoRandomGenerator().clearLocationCache();
+
         this.gameState = GameState.UNINITIALIZED;
     }
 

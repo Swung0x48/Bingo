@@ -73,10 +73,8 @@ public class BingoCommandExecutor implements CommandExecutor, TabCompleter {
             String bingoAction = args[0].toLowerCase();
             switch (bingoAction) {
                 case "setup":
-                    if (plugin.bingoGame.getGameState() != GameState.UNINITIALIZED) {
+                    if (plugin.bingoGame != null)
                         plugin.getMessageSender().broadcastMessage(MessageSender.bingoPrefix + ChatColor.YELLOW + "Warning: Any existing Bingo games has been stopped.");
-                        plugin.bingoGame.stop();
-                    };
                     plugin.bingoGame = new BingoGameClassic(plugin);
                     plugin.bingoGame.setup();
                     return true;

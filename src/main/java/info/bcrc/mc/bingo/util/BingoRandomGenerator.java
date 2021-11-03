@@ -2,6 +2,7 @@ package info.bcrc.mc.bingo.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.bukkit.Location;
@@ -14,6 +15,28 @@ public class BingoRandomGenerator {
         candidateItems = itemManager.getCandidateItems();
         minCoordinate = config.getMinCoordinate();
         maxCoordinate = config.getMaxCoordinate();
+        coloredFrequency = config.getColoredFrequency();
+    }
+
+    public boolean isColored(Material material) {
+        for (int i = 0; i < 16; i++) {
+            if (material.getKey().getKey().contains(colorPrefix[i]))
+                return true;
+        }
+
+        return false;
+    }
+
+    public ItemStack getItem() {
+        Material material = candidateItems.get(index);
+        if (isColored(material)) {
+            if ((new Random()).nextFloat() > coloredFrequency) {
+                index++;
+                return getItem();
+            }
+        }
+
+        return new ItemStack(material);
     }
 
     public ArrayList<ItemStack> getSelectedItems() {
@@ -34,7 +57,9 @@ public class BingoRandomGenerator {
                 selectedItems.add(new ItemStack(Material.AIR));
 
             for (int j = 0; j < 5; j++) {
-                selectedItems.add(new ItemStack(candidateItems.get(i++)));
+                selectedItems.add(getItem());
+                i++;
+                index++;
             }
 
             for (int j = 0; j < 2; ++j)
@@ -77,4 +102,8 @@ public class BingoRandomGenerator {
     private Location location;
     private int minCoordinate;
     private int maxCoordinate;
+    private float coloredFrequency;
+    private String[] colorPrefix = {"white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black"};
+
+    private int index = 0;
 }

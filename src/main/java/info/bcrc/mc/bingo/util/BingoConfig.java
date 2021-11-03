@@ -41,6 +41,7 @@ public class BingoConfig {
         }
 
         differentLocationPerPlayer = config.getBoolean("different-location-per-player");
+        coloredFrequency = (float) config.getDouble("colored-items-frequency");
 
         config.options().copyDefaults(true);
     }
@@ -57,9 +58,15 @@ public class BingoConfig {
         return differentLocationPerPlayer;
     };
 
+    public float getColoredFrequency() {
+        return coloredFrequency;
+    };
+
     // private final ArrayList<Material> candidateItems;
     private int minCoordinate;
     private int maxCoordinate;
 
     private boolean differentLocationPerPlayer;
+
+    private float coloredFrequency;
 }

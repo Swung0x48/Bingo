@@ -5,3 +5,6 @@ coordinate-range:
 
 # controls whether players get started in different or the same locations 
 different-location-per-player: false
+
+# limits the chance of items with colored variants appearing - 1 for treating each variant as any other items; 0.0625 for treating variants of the item as a single one   
+colored-items-frequency: 0.2

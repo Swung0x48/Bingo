@@ -70,6 +70,8 @@ public abstract class BingoGame {
         }
         this.gameState = GameState.SETUP;
 
+        plugin.getBingoRandomGenerator().clearLocationCache();
+
         plugin.getMessageSender().broadcastMessage(MessageSender.bingoPrefix + "A bingo game has been set up.");
         plugin.getMessageSender().broadcastRawMessage("{\"text\": \"\", \"extra\": [" + MessageSender.bingoJsonPrefix
                 + ", {\"text\": \"Type \"}, {\"text\": \"/bingo join\", \"color\": \"green\"}, {\"text\": \" or \"}, {\"text\": \"click here to join it directly\", \"underlined\": \"true\", \"clickEvent\": {\"action\": \"run_command\", \"value\": \"/bingo join\"}, \"hoverEvent\": {\"action\": \"show_text\", \"value\": \"click here to join it directly\"}}]}");
@@ -109,8 +111,6 @@ public abstract class BingoGame {
 
     public void stop() {
         plugin.getBingoListener().unregister();
-
-        plugin.getBingoRandomGenerator().clearLocationCache();
 
         this.gameState = GameState.UNINITIALIZED;
     }
